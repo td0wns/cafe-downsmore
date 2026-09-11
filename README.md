@@ -11,10 +11,14 @@ A small, static meal library and weekly planner for two. It encodes the househol
 - Previews recommendations against the current grocery list and highlights new additions.
 - Surfaces meals that have never been logged or have not been cooked recently.
 - Supports custom meal tags and custom ingredient rows.
+- Supports one dinner with shared ingredients plus separately cooked vegetarian and meat components.
+- Marks pre-made meals so their grocery entries remain package-level products rather than inferred scratch ingredients.
 - Exports/imports the full local dataset as JSON.
 - Copies a complete recommendation brief for ChatGPT.
 
 Data changes are saved in the browser. Export a backup after making important changes. The starter meal file is `dist/data/meals.json`.
+
+Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true` and `preMade: true`.
 
 ## GitHub Pages
 

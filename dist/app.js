@@ -1,7 +1,7 @@
 const STORE_KEY = "our-table-v1";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const CONCERNS = ["tomato", "vinegar", "olives", "mushrooms", "wine", "garlic", "onion", "cabbage"];
-const NON_PALETTE_TAGS = new Set(["suggestions", "our meals", "budget friendly", "simple to make", "quick", "easy", "one tray", "spring", "summer", "autumn", "winter"]);
+const NON_PALETTE_TAGS = new Set(["suggestions", "our meals", "pre-made", "budget friendly", "simple to make", "quick", "easy", "one tray", "spring", "summer", "autumn", "winter"]);
 const NEW_IDEAS = [
   {
     id: "suggested-feta-fritters", name: "Sweetcorn, courgette & feta fritters", category: "Quick", minutes: 30,
@@ -60,7 +60,13 @@ async function init() {
   state.week = { ...Object.fromEntries(DAYS.map(day => [day, ""])), ...(state.week || {}) };
   state.meals = (state.meals || []).map(meal => {
     const seeded = defaultMeals.find(item => item.id === meal.id);
-    return { ...meal, tags: meal.tags?.length ? meal.tags : seeded?.tags || ["Our meals"], ingredients: meal.ingredients || [] };
+    return {
+      ...meal,
+      tags: meal.tags?.length ? meal.tags : seeded?.tags || ["Our meals"],
+      preMade: Boolean(meal.preMade),
+      separateVersions: Boolean(meal.separateVersions),
+      ingredients: (meal.ingredients || []).map(ingredient => ({...ingredient, scope:ingredient.scope || "shared"}))
+    };
   });
   save();
   bindEvents();
@@ -86,6 +92,8 @@ function bindEvents() {
   $("#meal-form").addEventListener("submit", saveMealFromForm);
   $("#delete-meal").addEventListener("click", deleteCurrentMeal);
   $("#add-ingredient-row").addEventListener("click", () => addIngredientRow());
+  $("#meal-separate").addEventListener("change", updateMealOptionFields);
+  $("#meal-premade").addEventListener("change", updateMealOptionFields);
   $("#clear-week").addEventListener("click", () => {
     state.week = Object.fromEntries(DAYS.map(day => [day, ""]));
     comparisonId = null;
@@ -129,9 +137,11 @@ function plannedMeals() {
 function aggregateIngredients(meals) {
   const grouped = new Map();
   meals.forEach(meal => meal.ingredients.forEach(ingredient => {
-    const key = ingredient.name.trim().toLowerCase();
-    if (!grouped.has(key)) grouped.set(key, { key, name: ingredient.name, amounts: [], sources: [] });
+    const scope = ingredient.scope || "shared";
+    const key = `${scope}:${meal.preMade ? "pre-made" : "ingredient"}:${ingredient.name.trim().toLowerCase()}`;
+    if (!grouped.has(key)) grouped.set(key, { key, name: ingredient.name, scope, preMade:Boolean(meal.preMade), amounts: [], sources: [] });
     const item = grouped.get(key);
+    item.preMade = item.preMade || Boolean(meal.preMade);
     if (ingredient.amount) item.amounts.push(ingredient.amount);
     if (!item.sources.includes(meal.name)) item.sources.push(meal.name);
   }));
@@ -157,16 +167,22 @@ function renderWeek() {
 
 function renderGroceryList(meals) {
   const list = [...aggregateIngredients(meals).values()].sort((a,b) => a.name.localeCompare(b.name));
-  $("#planned-meal-tags").innerHTML = meals.map(meal => `<span class="plan-chip">✓ ${escapeHtml(meal.name)}</span>`).join("");
-  $("#grocery-list").innerHTML = list.length ? list.map(item => `<div class="grocery-item"><span class="grocery-tick">□</span><div><strong>${escapeHtml(item.name)}</strong>${item.amounts.length ? `<span>${escapeHtml(item.amounts.join(" + "))}</span>` : ""}<small>For ${escapeHtml(item.sources.join(" and "))}</small></div></div>`).join("") : `<div class="grocery-empty">Choose meals above and their ingredients will appear here.</div>`;
+  $("#planned-meal-tags").innerHTML = meals.map(meal => `<span class="plan-chip">✓ ${escapeHtml(meal.name)}${meal.preMade ? " · pre-made" : ""}</span>`).join("");
+  $("#grocery-list").innerHTML = list.length ? list.map(item => `<div class="grocery-item"><span class="grocery-tick">□</span><div><strong>${escapeHtml(item.name)}</strong>${item.amounts.length ? `<span>${escapeHtml(item.amounts.join(" + "))}</span>` : ""}<small>For ${escapeHtml(item.sources.join(" and "))}</small><div class="item-badges">${ingredientBadges(item)}</div></div></div>`).join("") : `<div class="grocery-empty">Choose meals above and their ingredients will appear here.</div>`;
+}
+
+function ingredientBadges(item) {
+  const scope = item.scope === "vegetarian" ? `<span class="scope-badge vegetarian">Veggie version</span>` : item.scope === "meat" ? `<span class="scope-badge meat">Meat version</span>` : "";
+  return `${scope}${item.preMade ? `<span class="ready-badge">Buy pre-made</span>` : ""}`;
 }
 
 function getAllTags() {
-  return [...new Set(state.meals.flatMap(meal => meal.tags || []))].sort((a,b) => a.localeCompare(b));
+  return [...new Set(state.meals.flatMap(meal => [...(meal.tags || []), ...(meal.preMade ? ["Pre-made"] : [])]))].sort((a,b) => a.localeCompare(b));
 }
 
-function tagMarkup(tags = []) {
-  return tags.map(tag => `<span class="meal-tag ${tag.toLowerCase() === "suggestions" ? "suggestion-tag" : ""}">${escapeHtml(tag)}</span>`).join("");
+function tagMarkup(tags = [], preMade = false) {
+  const visibleTags = preMade && !tags.some(tag => tag.toLowerCase() === "pre-made") ? [...tags, "Pre-made"] : tags;
+  return visibleTags.map(tag => `<span class="meal-tag ${tag.toLowerCase() === "suggestions" ? "suggestion-tag" : ""} ${tag.toLowerCase() === "pre-made" ? "premade-tag" : ""}">${escapeHtml(tag)}</span>`).join("");
 }
 
 function renderLibrary() {
@@ -177,10 +193,11 @@ function renderLibrary() {
   $$('[data-tag-filter]').forEach(button => button.addEventListener("click", () => { activeTag = button.dataset.tagFilter; renderLibrary(); }));
   const plannedIds = new Set(Object.values(state.week));
   const meals = state.meals.filter(meal => {
-    const matchesText = [meal.name, meal.category, meal.notes, ...(meal.tags || []), ...meal.ingredients.map(item => item.name)].join(" ").toLowerCase().includes(query);
-    return matchesText && (activeTag === "All" || meal.tags?.includes(activeTag));
+    const matchesText = [meal.name, meal.category, meal.notes, ...(meal.tags || []), ...(meal.preMade ? ["pre-made"] : []), ...meal.ingredients.map(item => item.name)].join(" ").toLowerCase().includes(query);
+    const mealTags = [...(meal.tags || []), ...(meal.preMade ? ["Pre-made"] : [])];
+    return matchesText && (activeTag === "All" || mealTags.includes(activeTag));
   });
-  $("#meal-grid").innerHTML = meals.map(meal => `<article class="meal-card ${plannedIds.has(meal.id) ? "is-planned" : ""}"><div class="card-top"><span class="category">${plannedIds.has(meal.id) ? "✓ Planned" : escapeHtml(meal.category || "Meal")}</span><span class="minutes">${meal.minutes ? `${meal.minutes} min` : "No time set"}</span></div><h3>${escapeHtml(meal.name)}</h3><div class="meal-tags">${tagMarkup(meal.tags)}</div><p class="ingredient-preview">${meal.ingredients.slice(0,6).map(item => escapeHtml(item.name)).join(" · ")}${meal.ingredients.length > 6 ? "…" : ""}</p>${meal.notes ? `<p class="meal-note">${escapeHtml(meal.notes)}</p>` : `<p class="meal-note">Not cooked yet</p>`}<div class="card-actions">${plannedIds.has(meal.id) ? `<button class="text-button" data-unplan="${meal.id}">Remove from week</button>` : `<button class="text-button" data-plan="${meal.id}">Add to week</button>`}<button class="text-button muted" data-edit="${meal.id}">Edit</button></div></article>`).join("");
+  $("#meal-grid").innerHTML = meals.map(meal => `<article class="meal-card ${plannedIds.has(meal.id) ? "is-planned" : ""}"><div class="card-top"><span class="category">${plannedIds.has(meal.id) ? "✓ Planned" : escapeHtml(meal.category || "Meal")}</span><span class="minutes">${meal.minutes ? `${meal.minutes} min` : "No time set"}</span></div><h3>${escapeHtml(meal.name)}</h3><div class="meal-tags">${tagMarkup(meal.tags, meal.preMade)}</div><p class="ingredient-preview">${meal.ingredients.slice(0,6).map(item => `${escapeHtml(item.name)}${item.scope === "vegetarian" ? " (veggie)" : item.scope === "meat" ? " (meat)" : ""}`).join(" · ")}${meal.ingredients.length > 6 ? "…" : ""}</p>${meal.notes ? `<p class="meal-note">${escapeHtml(meal.notes)}</p>` : `<p class="meal-note">Not cooked yet</p>`}<div class="card-actions">${plannedIds.has(meal.id) ? `<button class="text-button" data-unplan="${meal.id}">Remove from week</button>` : `<button class="text-button" data-plan="${meal.id}">Add to week</button>`}<button class="text-button muted" data-edit="${meal.id}">Edit</button></div></article>`).join("");
   $("#empty-library").hidden = meals.length > 0;
   $$('[data-plan]').forEach(button => button.addEventListener("click", () => addToNextDay(button.dataset.plan)));
   $$('[data-unplan]').forEach(button => button.addEventListener("click", () => removeFromWeek(button.dataset.unplan)));
@@ -230,7 +247,7 @@ function seededOrder(id) {
 }
 
 function ideaCard(meal, reason, isNew) {
-  return `<article class="idea-card"><div class="card-top"><span class="category">${isNew ? "New suggestion" : meal.lastCooked ? "Unused lately" : "From your library"}</span><span class="minutes">${meal.minutes} min</span></div><h3>${escapeHtml(meal.name)}</h3><div class="meal-tags">${tagMarkup(meal.tags)}</div><p>${escapeHtml(meal.notes || meal.ingredients.slice(0,4).map(item => item.name).join(", "))}</p><p class="reason">${escapeHtml(reason)}</p><button class="text-button compare-button" data-compare="${meal.id}">Compare grocery list →</button></article>`;
+  return `<article class="idea-card"><div class="card-top"><span class="category">${isNew ? "New suggestion" : meal.lastCooked ? "Unused lately" : "From your library"}</span><span class="minutes">${meal.minutes} min</span></div><h3>${escapeHtml(meal.name)}</h3><div class="meal-tags">${tagMarkup(meal.tags, meal.preMade)}</div><p>${escapeHtml(meal.notes || meal.ingredients.slice(0,4).map(item => item.name).join(", "))}</p><p class="reason">${escapeHtml(reason)}</p><button class="text-button compare-button" data-compare="${meal.id}">Compare grocery list →</button></article>`;
 }
 
 function findAnyMeal(id) {
@@ -248,7 +265,7 @@ function renderComparison() {
   const combined = aggregateIngredients([...plannedMeals(), meal]);
   const items = [...combined.values()].map(item => ({...item, isNew:!base.has(item.key)})).sort((a,b) => Number(a.isNew) - Number(b.isNew) || a.name.localeCompare(b.name));
   const newCount = items.filter(item => item.isNew).length;
-  panel.innerHTML = `<div class="comparison-head"><div><p class="eyebrow blue">Amended grocery list</p><h3>Add ${escapeHtml(meal.name)}</h3><p>${newCount} ${newCount === 1 ? "ingredient is" : "ingredients are"} new to your current list.</p></div><div class="comparison-actions"><button class="button ghost" id="copy-amended">Copy amended list</button><button class="button primary" id="accept-suggestion">Add to week</button></div></div><div class="amended-list">${items.map(item => `<div class="amended-item ${item.isNew ? "new" : ""}"><span class="grocery-tick">□</span><div><strong>${escapeHtml(item.name)}</strong>${item.amounts.length ? `<span>${escapeHtml(item.amounts.join(" + "))}</span>` : ""}</div>${item.isNew ? `<b>NEW</b>` : `<small>Already listed</small>`}</div>`).join("")}</div>`;
+  panel.innerHTML = `<div class="comparison-head"><div><p class="eyebrow blue">Amended grocery list</p><h3>Add ${escapeHtml(meal.name)}</h3><p>${newCount} ${newCount === 1 ? "ingredient is" : "ingredients are"} new to your current list.${meal.preMade ? " Pre-made items stay as packs to buy." : ""}</p></div><div class="comparison-actions"><button class="button ghost" id="copy-amended">Copy amended list</button><button class="button primary" id="accept-suggestion">Add to week</button></div></div><div class="amended-list">${items.map(item => `<div class="amended-item ${item.isNew ? "new" : ""}"><span class="grocery-tick">□</span><div><strong>${escapeHtml(item.name)}</strong>${item.amounts.length ? `<span>${escapeHtml(item.amounts.join(" + "))}</span>` : ""}<div class="item-badges">${ingredientBadges(item)}</div></div>${item.isNew ? `<b>NEW</b>` : `<small>Already listed</small>`}</div>`).join("")}</div>`;
   $("#copy-amended").addEventListener("click", () => copyAmendedList(meal));
   $("#accept-suggestion").addEventListener("click", () => addSuggestedMeal(meal));
 }
@@ -283,7 +300,8 @@ function markCooked(mealId) {
 function addIngredientRow(ingredient = {}) {
   const row = document.createElement("div");
   row.className = "ingredient-row";
-  row.innerHTML = `<label><span>Ingredient</span><input class="ingredient-name" placeholder="e.g. halloumi" value="${escapeHtml(ingredient.name || "")}" /></label><label><span>Amount</span><input class="ingredient-amount" placeholder="e.g. 225g" value="${escapeHtml(ingredient.amount || "")}" /></label><button type="button" class="remove-ingredient" aria-label="Remove ingredient">×</button>`;
+  row.innerHTML = `<label><span>Ingredient or product</span><input class="ingredient-name" placeholder="e.g. veggie nuggets" value="${escapeHtml(ingredient.name || "")}" /></label><label><span>Amount</span><input class="ingredient-amount" placeholder="e.g. 1 pack" value="${escapeHtml(ingredient.amount || "")}" /></label><label class="ingredient-scope-wrap"><span>For</span><select class="ingredient-scope"><option value="shared">Both</option><option value="vegetarian">Veggie version</option><option value="meat">Meat version</option></select></label><button type="button" class="remove-ingredient" aria-label="Remove ingredient">×</button>`;
+  row.querySelector(".ingredient-scope").value = ingredient.scope || "shared";
   row.querySelector(".remove-ingredient").addEventListener("click", () => {
     if ($$(".ingredient-row").length === 1) {
       row.querySelectorAll("input").forEach(input => input.value = "");
@@ -291,6 +309,15 @@ function addIngredientRow(ingredient = {}) {
     } else row.remove();
   });
   $("#ingredient-rows").append(row);
+}
+
+function updateMealOptionFields() {
+  const separate = $("#meal-separate").checked;
+  const preMade = $("#meal-premade").checked;
+  $("#ingredient-builder").classList.toggle("has-separate", separate);
+  $("#ingredient-legend").textContent = preMade ? "What to buy" : "Ingredients";
+  $("#ingredient-help").textContent = preMade ? "Add each ready-made pack and any sides. The grocery list will not invent ingredients for making these from scratch." : "Add each ingredient and the amount you normally buy.";
+  if (!separate) $$(".ingredient-scope").forEach(select => select.value = "shared");
 }
 
 function openMealDialog(id) {
@@ -301,12 +328,15 @@ function openMealDialog(id) {
   $("#meal-category").value = meal?.category || "";
   $("#meal-minutes").value = meal?.minutes || "";
   $("#meal-tags").value = meal?.tags?.join(", ") || "Our meals";
+  $("#meal-separate").checked = Boolean(meal?.separateVersions);
+  $("#meal-premade").checked = Boolean(meal?.preMade);
   $("#meal-notes").value = meal?.notes || "";
   $("#ingredient-rows").innerHTML = "";
   (meal?.ingredients?.length ? meal.ingredients : [{}]).forEach(addIngredientRow);
   const dominant = new Set((meal?.ingredients || []).filter(item => item.dominant).map(item => item.concern || item.name.toLowerCase()));
   $$('#concern-checks input').forEach(checkbox => checkbox.checked = dominant.has(checkbox.value));
   $("#delete-meal").hidden = !meal;
+  updateMealOptionFields();
   $("#meal-dialog").showModal();
 }
 
@@ -316,13 +346,15 @@ function saveMealFromForm(event) {
   event.preventDefault();
   const existingId = $("#meal-id").value;
   const dominant = new Set($$('#concern-checks input:checked').map(checkbox => checkbox.value));
-  const ingredients = $$(".ingredient-row").map(row => ({name:row.querySelector(".ingredient-name").value.trim(), amount:row.querySelector(".ingredient-amount").value.trim()})).filter(item => item.name).map(item => {
+  const separateVersions = $("#meal-separate").checked;
+  const preMade = $("#meal-premade").checked;
+  const ingredients = $$(".ingredient-row").map(row => ({name:row.querySelector(".ingredient-name").value.trim(), amount:row.querySelector(".ingredient-amount").value.trim(), scope:separateVersions ? row.querySelector(".ingredient-scope").value : "shared"})).filter(item => item.name).map(item => {
     const concern = CONCERNS.find(value => item.name.toLowerCase().includes(value));
-    return {name:item.name, ...(item.amount ? {amount:item.amount} : {}), ...(concern ? {concern, dominant:dominant.has(concern)} : {})};
+    return {name:item.name, scope:item.scope, ...(item.amount ? {amount:item.amount} : {}), ...(concern ? {concern, dominant:dominant.has(concern)} : {})};
   });
   if (!ingredients.length) return showToast("Add at least one ingredient");
   const tags = [...new Set($("#meal-tags").value.split(",").map(tag => tag.trim()).filter(Boolean))];
-  const meal = {id:existingId || slugify($("#meal-name").value), name:$("#meal-name").value.trim(), category:$("#meal-category").value.trim() || "Meal", minutes:Number($("#meal-minutes").value) || null, tags:tags.length ? tags : ["Our meals"], ingredients, notes:$("#meal-notes").value.trim(), lastCooked:null, timesCooked:0};
+  const meal = {id:existingId || slugify($("#meal-name").value), name:$("#meal-name").value.trim(), category:$("#meal-category").value.trim() || "Meal", minutes:Number($("#meal-minutes").value) || null, tags:tags.length ? tags : ["Our meals"], preMade, separateVersions, ingredients, notes:$("#meal-notes").value.trim(), lastCooked:null, timesCooked:0};
   const index = state.meals.findIndex(item => item.id === existingId);
   if (index >= 0) state.meals[index] = {...state.meals[index], ...meal, id:existingId};
   else {
@@ -347,27 +379,33 @@ function slugify(value) {
 async function copyShoppingList() {
   const items = [...aggregateIngredients(plannedMeals()).values()].sort((a,b) => a.name.localeCompare(b.name));
   if (!items.length) return showToast("Choose some meals first");
-  await navigator.clipboard.writeText(items.map(item => `□ ${item.name}${item.amounts.length ? ` — ${item.amounts.join(" + ")}` : ""}`).join("\n"));
+  await navigator.clipboard.writeText(items.map(item => shoppingLine(item)).join("\n"));
   showToast("Shopping list copied");
 }
 
 async function copyAmendedList(meal) {
   const base = aggregateIngredients(plannedMeals());
   const items = [...aggregateIngredients([...plannedMeals(), meal]).values()].sort((a,b) => a.name.localeCompare(b.name));
-  await navigator.clipboard.writeText(items.map(item => `□ ${item.name}${item.amounts.length ? ` — ${item.amounts.join(" + ")}` : ""}${base.has(item.key) ? "" : "  ← NEW"}`).join("\n"));
+  await navigator.clipboard.writeText(items.map(item => shoppingLine(item, !base.has(item.key))).join("\n"));
   showToast("Amended list copied");
+}
+
+function shoppingLine(item, isNew = false) {
+  const scope = item.scope === "vegetarian" ? " [VEGGIE VERSION]" : item.scope === "meat" ? " [MEAT VERSION]" : "";
+  const ready = item.preMade ? " [BUY PRE-MADE]" : "";
+  return `□ ${item.name}${scope}${ready}${item.amounts.length ? ` — ${item.amounts.join(" + ")}` : ""}${isNew ? "  ← NEW" : ""}`;
 }
 
 async function copyRecommendationBrief() {
   const planned = DAYS.map(day => state.week[day] ? `${day}: ${state.meals.find(meal => meal.id === state.week[day])?.name || ""}` : `${day}: open`).join("\n");
-  const library = state.meals.map(meal => `- ${meal.name} [tags: ${(meal.tags || []).join(", ")}; ${meal.minutes || "?"} min]: ${meal.ingredients.map(item => item.name).join(", ")}. Last cooked: ${meal.lastCooked || "not logged"}.`).join("\n");
-  const text = `Help us plan vegetarian dinners for two.\n\nHard rules:\n- All meals must be vegetarian.\n- Exclude coconut entirely (mild allergy).\n\nFlavour preferences:\n- Vinegar, tomato, olives, mushrooms and wine may be minor ingredients but must not be the main flavour profile. Tomato soup is a hard no; a little ketchup in a burger is fine.\n- Garlic, onion and cabbage should be used lightly because of mild intolerances. A dish heavy on one is okay only occasionally.\n- Balance cuisine and flavour tags across the week so no palate dominates.\n\nThis week:\n${planned}\n\nOur meal library:\n${library}\n\nFirst suggest unused library meals for open days, prioritising palettes not yet represented. Then suggest 3 new meals tagged Suggestions. Flag sensitive ingredients as minor or dominant, and show how each option amends the current grocery list.`;
+  const library = state.meals.map(meal => `- ${meal.name} [tags: ${(meal.tags || []).join(", ")}; ${meal.minutes || "?"} min; ${meal.preMade ? "BUY PRE-MADE — use only the listed products" : "cook from ingredients"}; ${meal.separateVersions ? "separate veggie and meat versions" : "shared vegetarian meal"}]: ${meal.ingredients.map(item => `${item.name}${item.scope === "vegetarian" ? " (veggie version)" : item.scope === "meat" ? " (meat version)" : ""}`).join(", ")}. Last cooked: ${meal.lastCooked || "not logged"}.`).join("\n");
+  const text = `Help us plan dinners for two.\n\nHard rules:\n- Every dinner needs a vegetarian version for my wife. A meat version for me is allowed only when cooked separately.\n- Exclude coconut entirely (mild allergy).\n- A meal marked BUY PRE-MADE means the listed products are the entire grocery requirement. Never infer flour, raw meat, spices or other scratch-cooking ingredients for it.\n\nFlavour preferences:\n- Vinegar, tomato, olives, mushrooms and wine may be minor ingredients but must not be the main flavour profile. Tomato soup is a hard no; a little ketchup in a burger is fine.\n- Garlic, onion and cabbage should be used lightly because of mild intolerances. A dish heavy on one is okay only occasionally.\n- Balance cuisine and flavour tags across the week so no palate dominates.\n\nThis week:\n${planned}\n\nOur meal library:\n${library}\n\nFirst suggest unused library meals for open days, prioritising palettes not yet represented. Then suggest 3 new meals tagged Suggestions. Flag sensitive ingredients as minor or dominant, and show how each option amends the current grocery list.`;
   await navigator.clipboard.writeText(text);
   showToast("Recommendation brief copied");
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify({version:2, exportedAt:new Date().toISOString(), ...state}, null, 2)], {type:"application/json"});
+  const blob = new Blob([JSON.stringify({version:3, exportedAt:new Date().toISOString(), ...state}, null, 2)], {type:"application/json"});
   const link = Object.assign(document.createElement("a"), {href:URL.createObjectURL(blob), download:`our-table-${new Date().toISOString().slice(0,10)}.json`});
   link.click(); URL.revokeObjectURL(link.href); showToast("Backup exported");
 }
@@ -378,7 +416,7 @@ async function importData(event) {
   try {
     const data = JSON.parse(await file.text());
     if (!Array.isArray(data.meals)) throw new Error("No meals found");
-    state = {meals:data.meals.map(meal => ({...meal, tags:meal.tags?.length ? meal.tags : ["Our meals"]})), week:{...Object.fromEntries(DAYS.map(day => [day, ""])), ...(data.week || {})}};
+    state = {meals:data.meals.map(meal => ({...meal, tags:meal.tags?.length ? meal.tags : ["Our meals"], preMade:Boolean(meal.preMade), separateVersions:Boolean(meal.separateVersions), ingredients:(meal.ingredients || []).map(item => ({...item, scope:item.scope || "shared"}))})), week:{...Object.fromEntries(DAYS.map(day => [day, ""])), ...(data.week || {})}};
     save(); renderAll(); showToast("Backup imported");
   } catch { showToast("That backup could not be read"); }
   event.target.value = "";

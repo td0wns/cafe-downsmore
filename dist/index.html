@@ -23,7 +23,7 @@
 
     <main>
       <section class="preference-strip" aria-label="Household food preferences">
-        <div><span class="status-dot safe"></span><strong>Always vegetarian</strong></div>
+        <div><span class="status-dot safe"></span><strong>Veggie version every time</strong>Meat can be cooked separately</div>
         <div><span class="status-dot avoid"></span><strong>No coconut</strong></div>
         <div><span class="status-dot limit"></span><strong>Keep light:</strong> tomato, vinegar, olives, mushrooms, wine</div>
         <div><span class="status-dot gentle"></span><strong>Go gently:</strong> garlic, onion, cabbage</div>
@@ -142,8 +142,13 @@
           <label>Minutes<input id="meal-minutes" type="number" min="1" max="600" placeholder="30" /></label>
         </div>
         <label>Tags <small>Comma-separated, such as Asian, Spicy or Comfort</small><input id="meal-tags" placeholder="Asian, Fresh" /></label>
-        <fieldset class="ingredient-builder">
-          <legend>Ingredients</legend>
+        <div class="meal-options">
+          <label class="option-card"><input id="meal-separate" type="checkbox" /><span><strong>Separate veggie & meat versions</strong><small>Assign each ingredient to both plates, the veggie plate or the meat plate.</small></span></label>
+          <label class="option-card"><input id="meal-premade" type="checkbox" /><span><strong>Buy this pre-made</strong><small>List packs and sides to buy. We won’t turn them into scratch ingredients.</small></span></label>
+        </div>
+        <fieldset id="ingredient-builder" class="ingredient-builder">
+          <legend id="ingredient-legend">Ingredients</legend>
+          <p id="ingredient-help" class="field-help">Add each ingredient and the amount you normally buy.</p>
           <div id="ingredient-rows"></div>
           <button type="button" id="add-ingredient-row" class="text-button">+ Add another ingredient</button>
         </fieldset>

@@ -1,4 +1,6 @@
 {
+  "mealPattern": "Every meal needs a vegetarian version. Meat may be added only as a separately cooked component.",
+  "preMadeRule": "For meals marked pre-made, use only the listed packaged products and sides; do not infer scratch-cooking ingredients.",
   "household": [
     { "person": "Wife", "type": "diet", "item": "meat and fish", "level": "avoid", "note": "Vegetarian meals only" },
     { "person": "You", "type": "allergy", "item": "coconut", "level": "avoid", "note": "Mild allergy — exclude entirely" },
