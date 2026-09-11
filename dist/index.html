@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#081b33" />
+    <meta name="description" content="A private-feeling meal library and weekly planner for two." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23081b33'/%3E%3Cpath d='M14 31h36c0 12-7 20-18 20S14 43 14 31Z' fill='%23f5b82e'/%3E%3Cpath d='M20 27c2-8 8-13 12-14-1 7-5 12-12 14Zm13 0c3-7 9-10 15-9-3 6-8 9-15 9Z' fill='%236fd0a2'/%3E%3C/svg%3E" />
+    <title>Our Table — meal planner</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <img src="assets/supper-table.png" alt="A vegetarian grain bowl and flatbread laid out for dinner" />
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Meal library for two</p>
+        <h1>Our Table</h1>
+        <p>Plan the week. Rediscover old favourites. Keep the awkward ingredients in the background.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="preference-strip" aria-label="Household food preferences">
+        <div><span class="status-dot safe"></span><strong>Always vegetarian</strong></div>
+        <div><span class="status-dot avoid"></span><strong>No coconut</strong></div>
+        <div><span class="status-dot limit"></span><strong>Keep light:</strong> tomato, vinegar, olives, mushrooms, wine</div>
+        <div><span class="status-dot gentle"></span><strong>Go gently:</strong> garlic, onion, cabbage</div>
+      </section>
+
+      <nav class="tabs" aria-label="Meal planner sections">
+        <button class="tab active" data-view="week">This week</button>
+        <button class="tab" data-view="library">Meal library <span id="meal-count" class="count"></span></button>
+        <button class="tab" data-view="ideas">Suggestions</button>
+        <button class="tab" data-view="data">Back up & share</button>
+      </nav>
+
+      <section id="week" class="view active" aria-labelledby="week-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow blue">Weekly plan</p>
+            <h2 id="week-title">What are we eating?</h2>
+          </div>
+          <button id="clear-week" class="button ghost">Clear week</button>
+        </div>
+        <div id="week-grid" class="week-grid"></div>
+        <div class="week-summary">
+          <div><span id="planned-count">0</span><small>meals planned</small></div>
+          <div><span id="ingredient-count">0</span><small>unique ingredients</small></div>
+          <button id="copy-list" class="button secondary">Copy shopping list</button>
+        </div>
+        <section class="grocery-board" aria-labelledby="grocery-title">
+          <div class="grocery-head">
+            <div>
+              <p class="eyebrow blue">Built from your plan</p>
+              <h3 id="grocery-title">Groceries for planned meals</h3>
+            </div>
+            <div id="planned-meal-tags" class="planned-meal-tags"></div>
+          </div>
+          <div id="grocery-list" class="grocery-list"></div>
+        </section>
+      </section>
+
+      <section id="library" class="view" aria-labelledby="library-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow blue">Your reliable choices</p>
+            <h2 id="library-title">Meal library</h2>
+          </div>
+          <button id="add-meal" class="button primary">+ Add a meal</button>
+        </div>
+        <div id="tag-filters" class="tag-filters" aria-label="Filter meals by tag"></div>
+        <label class="search"><span>Search</span><input id="search" type="search" placeholder="Meal, ingredient, tag or note…" /></label>
+        <div id="meal-grid" class="meal-grid"></div>
+        <div id="empty-library" class="empty" hidden>No meals match that search.</div>
+      </section>
+
+      <section id="ideas" class="view" aria-labelledby="ideas-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow blue">A nudge, not a roulette wheel</p>
+            <h2 id="ideas-title">Good options for next week</h2>
+          </div>
+          <button id="refresh-ideas" class="button ghost">Shuffle ideas</button>
+        </div>
+        <aside class="palate-board">
+          <div>
+            <p class="eyebrow blue">Taste balance</p>
+            <h3>Palettes already in your plan</h3>
+          </div>
+          <div id="palate-snapshot" class="palate-snapshot"></div>
+        </aside>
+        <h3 class="subhead">From your library</h3>
+        <div id="unused-grid" class="idea-grid"></div>
+        <h3 class="subhead">New dishes to consider</h3>
+        <div id="new-grid" class="idea-grid"></div>
+        <section id="comparison-panel" class="comparison-panel" aria-live="polite"></section>
+      </section>
+
+      <section id="data" class="view" aria-labelledby="data-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow blue">Portable by design</p>
+            <h2 id="data-title">Back up & ask for recommendations</h2>
+          </div>
+        </div>
+        <div class="data-grid">
+          <article class="data-card feature-card">
+            <span class="step">01</span>
+            <h3>Ask ChatGPT</h3>
+            <p>Copy a tidy summary of your preferences, library and current week, then paste it into our chat.</p>
+            <button id="copy-brief" class="button primary">Copy recommendation brief</button>
+          </article>
+          <article class="data-card">
+            <span class="step">02</span>
+            <h3>Save your data</h3>
+            <p>Your changes stay in this browser. Export a JSON backup whenever you add meals or mark one cooked.</p>
+            <button id="export-data" class="button secondary">Export backup</button>
+          </article>
+          <article class="data-card">
+            <span class="step">03</span>
+            <h3>Restore or move device</h3>
+            <p>Import a previous backup. It replaces the meal data currently saved in this browser.</p>
+            <label class="button secondary file-button">Import backup<input id="import-data" type="file" accept="application/json,.json" /></label>
+          </article>
+        </div>
+        <aside class="github-note">
+          <strong>GitHub connection</strong>
+          <p>This app is ready for GitHub Pages. Keep the exported file in the repository as <code>dist/data/meals.json</code>; if the repository is public, its raw link gives ChatGPT a read-only source for future meal planning.</p>
+        </aside>
+      </section>
+    </main>
+
+    <dialog id="meal-dialog">
+      <form id="meal-form" method="dialog">
+        <div class="dialog-head"><div><p class="eyebrow blue">Library entry</p><h2 id="dialog-title">Add a meal</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button></div>
+        <input type="hidden" id="meal-id" />
+        <label>Meal name<input id="meal-name" required placeholder="e.g. Halloumi wraps" /></label>
+        <div class="form-row">
+          <label>Category<input id="meal-category" placeholder="e.g. Quick" /></label>
+          <label>Minutes<input id="meal-minutes" type="number" min="1" max="600" placeholder="30" /></label>
+        </div>
+        <label>Tags <small>Comma-separated, such as Asian, Spicy or Comfort</small><input id="meal-tags" placeholder="Asian, Fresh" /></label>
+        <fieldset class="ingredient-builder">
+          <legend>Ingredients</legend>
+          <div id="ingredient-rows"></div>
+          <button type="button" id="add-ingredient-row" class="text-button">+ Add another ingredient</button>
+        </fieldset>
+        <label>Notes<textarea id="meal-notes" rows="3" placeholder="Swaps, sides, or anything worth remembering…"></textarea></label>
+        <fieldset>
+          <legend>Does a sensitive ingredient lead the flavour?</legend>
+          <div id="concern-checks" class="checks"></div>
+        </fieldset>
+        <div class="dialog-actions"><button type="button" id="delete-meal" class="button danger" hidden>Delete</button><span></span><button type="button" id="cancel-dialog" class="button ghost">Cancel</button><button type="submit" class="button primary">Save meal</button></div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

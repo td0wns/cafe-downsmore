@@ -1,0 +1,14 @@
+{
+  "household": [
+    { "person": "Wife", "type": "diet", "item": "meat and fish", "level": "avoid", "note": "Vegetarian meals only" },
+    { "person": "You", "type": "allergy", "item": "coconut", "level": "avoid", "note": "Mild allergy — exclude entirely" },
+    { "person": "You", "type": "dislike", "item": "vinegar", "level": "limit", "note": "Fine in the background, not a main flavour" },
+    { "person": "You", "type": "dislike", "item": "tomato", "level": "limit", "note": "Fine as a minor ingredient, not tomato-led" },
+    { "person": "You", "type": "dislike", "item": "olives", "level": "limit", "note": "Fine in the background, not a main flavour" },
+    { "person": "You", "type": "dislike", "item": "mushrooms", "level": "limit", "note": "Fine in the background, not a main flavour" },
+    { "person": "You", "type": "dislike", "item": "wine", "level": "limit", "note": "Fine in the background, not a main flavour" },
+    { "person": "Wife", "type": "intolerance", "item": "garlic", "level": "limit", "note": "Prefer light use; a garlic-heavy dish only occasionally" },
+    { "person": "Wife", "type": "intolerance", "item": "onion", "level": "limit", "note": "Prefer light use; an onion-heavy dish only occasionally" },
+    { "person": "Wife", "type": "intolerance", "item": "cabbage", "level": "limit", "note": "Prefer light use; a cabbage-heavy dish only occasionally" }
+  ]
+}
