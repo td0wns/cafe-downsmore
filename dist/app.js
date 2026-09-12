@@ -1,5 +1,6 @@
 const STORE_KEY = "our-table-v1";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const MAX_LAST_WEEK_MEALS = 10;
 const NON_PALETTE_TAGS = new Set(["suggestions", "our meals", "pre-made", "budget friendly", "simple to make", "quick", "easy", "one tray", "spring", "summer", "autumn", "winter"]);
 const NEW_IDEAS = [
   {
@@ -58,6 +59,13 @@ function normaliseWeek(week) {
   return {...emptyWeek(), ...(week || {})};
 }
 
+function previousMealIds(previousWeek = state.previousWeek) {
+  if (!previousWeek) return [];
+  if (Array.isArray(previousWeek.mealIds)) return previousWeek.mealIds.filter(Boolean).slice(0, MAX_LAST_WEEK_MEALS);
+  if (previousWeek.week && typeof previousWeek.week === "object") return Object.values(previousWeek.week).filter(Boolean).slice(0, MAX_LAST_WEEK_MEALS);
+  return [];
+}
+
 function hasPlannedMeals(week) {
   return Object.values(week || {}).some(Boolean);
 }
@@ -67,6 +75,12 @@ function weekStartDate(date = new Date()) {
   value.setHours(12, 0, 0, 0);
   value.setDate(value.getDate() - ((value.getDay() + 6) % 7));
   return value;
+}
+
+function lastWeekStartKey() {
+  const date = weekStartDate();
+  date.setDate(date.getDate() - 7);
+  return dateKey(date);
 }
 
 function dateKey(date) {
@@ -100,7 +114,7 @@ function syncRollingWeeks() {
   }
   const elapsed = weeksBetween(state.weekStart, currentStart);
   if (elapsed > 0) {
-    if (hasPlannedMeals(state.week)) state.previousWeek = {weekStart:state.weekStart, week:{...state.week}};
+    if (hasPlannedMeals(state.week)) state.previousWeek = {weekStart:state.weekStart, mealIds:Object.values(state.week).filter(Boolean).slice(0, MAX_LAST_WEEK_MEALS)};
     state.week = emptyWeek();
     state.weekStart = currentStart;
     changed = true;
@@ -109,8 +123,11 @@ function syncRollingWeeks() {
     changed = true;
   }
   if (state.previousWeek) {
-    state.previousWeek = {weekStart:state.previousWeek.weekStart, week:normaliseWeek(state.previousWeek.week)};
-    if (!parseDateKey(state.previousWeek.weekStart) || !hasPlannedMeals(state.previousWeek.week) || weeksBetween(state.previousWeek.weekStart, currentStart) > 2) {
+    state.previousWeek = {
+      weekStart:parseDateKey(state.previousWeek.weekStart) ? state.previousWeek.weekStart : lastWeekStartKey(),
+      mealIds:previousMealIds(state.previousWeek)
+    };
+    if (!state.previousWeek.mealIds.length || weeksBetween(state.previousWeek.weekStart, currentStart) > 2) {
       state.previousWeek = null;
       changed = true;
     }
@@ -159,9 +176,12 @@ async function init() {
   });
   const mealIds = new Set(state.meals.map(meal => meal.id));
   DAYS.forEach(day => { if (!mealIds.has(state.week[day])) state.week[day] = ""; });
-  if (state.previousWeek?.week) {
-    DAYS.forEach(day => { if (!mealIds.has(state.previousWeek.week[day])) state.previousWeek.week[day] = ""; });
-    if (!hasPlannedMeals(state.previousWeek.week)) state.previousWeek = null;
+  if (state.previousWeek) {
+    const retainedIds = previousMealIds().filter(id => mealIds.has(id));
+    state.previousWeek = retainedIds.length ? {
+      weekStart:parseDateKey(state.previousWeek.weekStart) ? state.previousWeek.weekStart : lastWeekStartKey(),
+      mealIds:retainedIds
+    } : null;
   }
   syncRollingWeeks();
   save();
@@ -189,6 +209,15 @@ function bindEvents() {
   });
   $("#copy-list").addEventListener("click", copyShoppingList);
   $("#refresh-ideas").addEventListener("click", () => { shuffleSeed += 1; renderIdeas(); });
+  $("#add-last-week-meal").addEventListener("click", addLastWeekMeal);
+  $("#last-week-meal-select").addEventListener("keydown", event => {
+    if (event.key === "Enter") { event.preventDefault(); addLastWeekMeal(); }
+  });
+  $("#clear-last-week").addEventListener("click", () => {
+    if (!previousMealIds().length) return;
+    state.previousWeek = null;
+    save(); renderAll(); showToast("Last week cleared");
+  });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && syncRollingWeeks()) { save(); renderAll(); }
   });
@@ -230,7 +259,7 @@ function plannedMeals(week = state.week) {
 }
 
 function previousWeekMeals() {
-  return state.previousWeek ? plannedMeals(state.previousWeek.week) : [];
+  return previousMealIds().map(id => state.meals.find(meal => meal.id === id)).filter(Boolean);
 }
 
 function aggregateIngredients(meals) {
@@ -267,17 +296,40 @@ function renderWeek() {
 }
 
 function renderPreviousWeek() {
-  const panel = $("#previous-week-panel");
-  if (!state.previousWeek) {
-    panel.hidden = true;
-    return;
-  }
-  panel.hidden = false;
-  $("#previous-week-range").textContent = formatWeekRange(state.previousWeek.weekStart);
-  $("#previous-week-grid").innerHTML = DAYS.map(day => {
-    const meal = state.meals.find(item => item.id === state.previousWeek.week[day]);
-    return `<div class="history-day ${meal ? "" : "empty"}"><span>${day.slice(0,3)}</span><strong>${meal ? escapeHtml(meal.name) : "—"}</strong></div>`;
-  }).join("");
+  const ids = previousMealIds();
+  const select = $("#last-week-meal-select");
+  $("#previous-week-range").textContent = formatWeekRange(state.previousWeek?.weekStart || lastWeekStartKey());
+  $("#last-week-count").textContent = `${ids.length} / ${MAX_LAST_WEEK_MEALS} meals`;
+  select.innerHTML = `<option value="">Choose from the library…</option>${state.meals.slice().sort((a,b) => a.name.localeCompare(b.name)).map(meal => `<option value="${escapeHtml(meal.id)}">${escapeHtml(meal.name)}</option>`).join("")}`;
+  select.disabled = ids.length >= MAX_LAST_WEEK_MEALS;
+  $("#add-last-week-meal").disabled = ids.length >= MAX_LAST_WEEK_MEALS;
+  $("#clear-last-week").disabled = !ids.length;
+  $("#previous-week-grid").innerHTML = ids.length ? ids.map((id, index) => {
+    const meal = state.meals.find(item => item.id === id);
+    return `<div class="history-meal"><span>${index + 1}</span><div><strong>${escapeHtml(meal.name)}</strong><small>${escapeHtml(tasteTags(meal).join(" · ") || meal.category || "Meal")}</small></div><button type="button" data-remove-last-week="${index}" aria-label="Remove ${escapeHtml(meal.name)} from last week">×</button></div>`;
+  }).join("") : `<p class="history-empty">Add the meals you remember from last week. They will immediately influence Suggestions.</p>`;
+  $$('[data-remove-last-week]').forEach(button => button.addEventListener("click", () => removeLastWeekMeal(Number(button.dataset.removeLastWeek))));
+}
+
+function addLastWeekMeal() {
+  const select = $("#last-week-meal-select");
+  const mealId = select.value;
+  const ids = previousMealIds();
+  if (!mealId) return showToast("Choose a meal first");
+  if (ids.length >= MAX_LAST_WEEK_MEALS) return showToast("Last week is limited to 10 meals");
+  state.previousWeek = {
+    weekStart:state.previousWeek?.weekStart || lastWeekStartKey(),
+    mealIds:[...ids, mealId]
+  };
+  save(); renderAll(); showToast("Added to last week");
+}
+
+function removeLastWeekMeal(index) {
+  const ids = previousMealIds();
+  const [removedId] = ids.splice(index, 1);
+  const removedMeal = state.meals.find(meal => meal.id === removedId);
+  state.previousWeek = ids.length ? {weekStart:state.previousWeek.weekStart, mealIds:ids} : null;
+  save(); renderAll(); showToast(removedMeal ? `${removedMeal.name} removed` : "Meal removed");
 }
 
 function renderGroceryList(meals) {
@@ -347,7 +399,7 @@ function renderIdeas() {
   const counts = paletteCounts();
   $("#palate-snapshot").innerHTML = counts.size ? [...counts.entries()].sort((a,b) => b[1] - a[1]).map(([tag,count]) => `<span class="palette-chip"><strong>${escapeHtml(tag)}</strong> ${count}×</span>`).join("") : `<span class="palette-empty">No meals in either retained week — your first choice sets the baseline.</span>`;
   const plannedIds = new Set(Object.values(state.week));
-  const previousIds = new Set(state.previousWeek ? Object.values(state.previousWeek.week) : []);
+  const previousIds = new Set(previousMealIds());
   const candidates = state.meals.filter(meal => !plannedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts, previousIds) - balanceScore(b, counts, previousIds) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3);
   $("#unused-grid").innerHTML = candidates.length ? candidates.map(meal => ideaCard(meal, balanceReason(meal, counts, previousIds), false)).join("") : `<div class="empty">Every library meal is already in this week.</div>`;
   const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id)).sort((a,b) => balanceScore(a, counts, previousIds) - balanceScore(b, counts, previousIds) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3);

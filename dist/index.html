@@ -44,16 +44,25 @@
           </div>
           <button id="clear-week" class="button ghost">Clear week</button>
         </div>
-        <aside id="previous-week-panel" class="previous-week-panel" aria-labelledby="previous-week-title" hidden>
+        <aside id="previous-week-panel" class="previous-week-panel" aria-labelledby="previous-week-title">
           <div class="history-head">
             <div>
               <p class="eyebrow blue">Previous week</p>
-              <h3 id="previous-week-title">Recently planned</h3>
+              <h3 id="previous-week-title">Last week’s meals</h3>
               <p id="previous-week-range" class="week-range"></p>
             </div>
-            <p>Kept for two weeks, unless a newer completed week replaces it.</p>
+            <div class="history-summary">
+              <strong id="last-week-count">0 / 10 meals</strong>
+              <p>These meals shape the suggestions, helping avoid repeated dishes and flavours.</p>
+            </div>
           </div>
-          <div id="previous-week-grid" class="previous-week-grid"></div>
+          <div class="last-week-controls">
+            <label for="last-week-meal-select">Add a meal</label>
+            <select id="last-week-meal-select"><option value="">Choose from the library…</option></select>
+            <button id="add-last-week-meal" class="button secondary" type="button">Add</button>
+            <button id="clear-last-week" class="button ghost" type="button">Clear list</button>
+          </div>
+          <div id="previous-week-grid" class="previous-week-list"></div>
         </aside>
         <div id="week-grid" class="week-grid"></div>
         <div class="week-summary">

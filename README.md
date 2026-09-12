@@ -6,7 +6,7 @@ A small, static meal library and weekly planner for two. It encodes the househol
 
 - Stores a meal library with ingredient lists, notes, cook time and cooking history.
 - Plans seven dinners and builds a combined shopping list.
-- Automatically keeps the last planned week beside the current week. A newer planned week replaces it; otherwise it expires after two weeks.
+- Lets you record up to 10 meals from last week, and automatically fills that list from the current plan when the week rolls over. A newer completed week replaces it; otherwise it expires after two weeks.
 - Displays the ingredients pulled from every planned meal.
 - Uses cuisine and flavour tags to avoid an overloaded weekly palate.
 - Previews recommendations against the current grocery list and highlights new additions.
@@ -19,7 +19,7 @@ A small, static meal library and weekly planner for two. It encodes the househol
 
 Meals, ingredients, tags and recipe links are maintained in `dist/data/meals.json` and published through the repository. Weekly plans, retained previous-week data and cooking history are saved in the browser.
 
-Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state stores `weekStart`, a read-only `previousWeek` snapshot and per-meal cooking history.
+Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state stores `weekStart`, up to 10 `previousWeek.mealIds`, and per-meal cooking history.
 
 ## GitHub Pages
 
