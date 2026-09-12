@@ -1,0 +1,137 @@
+[
+  {
+    "name": "American",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Aromatic",
+    "kind": "flavour",
+    "palette": true
+  },
+  {
+    "name": "Asian",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Autumn",
+    "kind": "season",
+    "palette": false
+  },
+  {
+    "name": "British",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Budget friendly",
+    "kind": "marker",
+    "palette": false
+  },
+  {
+    "name": "Comfort",
+    "kind": "flavour",
+    "palette": true
+  },
+  {
+    "name": "Easy",
+    "kind": "effort",
+    "palette": false
+  },
+  {
+    "name": "European",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Fresh",
+    "kind": "flavour",
+    "palette": true
+  },
+  {
+    "name": "Indian-inspired",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Italian",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Japanese-inspired",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Light",
+    "kind": "flavour",
+    "palette": true
+  },
+  {
+    "name": "Mediterranean",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Mexican-inspired",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "Middle Eastern",
+    "kind": "cuisine",
+    "palette": true
+  },
+  {
+    "name": "One tray",
+    "kind": "effort",
+    "palette": false
+  },
+  {
+    "name": "Our meals",
+    "kind": "source",
+    "palette": false
+  },
+  {
+    "name": "Pre-made",
+    "kind": "marker",
+    "palette": false
+  },
+  {
+    "name": "Quick",
+    "kind": "effort",
+    "palette": false
+  },
+  {
+    "name": "Simple to make",
+    "kind": "effort",
+    "palette": false
+  },
+  {
+    "name": "Smoky",
+    "kind": "flavour",
+    "palette": true
+  },
+  {
+    "name": "Spring",
+    "kind": "season",
+    "palette": false
+  },
+  {
+    "name": "Suggestions",
+    "kind": "source",
+    "palette": false
+  },
+  {
+    "name": "Summer",
+    "kind": "season",
+    "palette": false
+  },
+  {
+    "name": "Winter",
+    "kind": "season",
+    "palette": false
+  }
+]

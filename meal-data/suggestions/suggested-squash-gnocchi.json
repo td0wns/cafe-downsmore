@@ -1,0 +1,16 @@
+{
+  "id": "suggested-squash-gnocchi",
+  "name": "Butternut squash & sage gnocchi",
+  "category": "Weekend",
+  "tags": ["Suggestions", "Italian", "Autumn"],
+  "minutes": 45,
+  "ingredients": [
+    { "ingredient": "potato-gnocchi", "amount": "500g" },
+    { "ingredient": "butternut-squash", "amount": "1 small" },
+    { "ingredient": "spinach", "amount": "150g" },
+    { "ingredient": "butter", "amount": "60g" },
+    { "ingredient": "sage", "amount": "small bunch" },
+    { "ingredient": "vegetarian-hard-cheese", "amount": "60g" }
+  ],
+  "notes": "Brown butter, wilted spinach and crisp sage."
+}

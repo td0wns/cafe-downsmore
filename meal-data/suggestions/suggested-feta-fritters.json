@@ -1,0 +1,18 @@
+{
+  "id": "suggested-feta-fritters",
+  "name": "Sweetcorn, courgette & feta fritters",
+  "category": "Quick",
+  "tags": ["Suggestions", "European", "Fresh"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "sweetcorn", "amount": "300g" },
+    { "ingredient": "courgette", "amount": "1 large" },
+    { "ingredient": "feta", "amount": "150g" },
+    { "ingredient": "eggs", "amount": "2" },
+    { "ingredient": "plain-flour", "amount": "80g" },
+    { "ingredient": "yoghurt", "amount": "150g" },
+    { "ingredient": "lemon", "amount": "1" },
+    { "ingredient": "baby-potatoes", "amount": "400g" }
+  ],
+  "notes": "Serve with lemon yoghurt and herby potatoes."
+}

@@ -1,0 +1,16 @@
+{
+  "id": "veggie-burgers",
+  "name": "Veggie burgers & wedges",
+  "category": "Favourite",
+  "tags": ["Suggestions", "American", "Comfort"],
+  "minutes": 40,
+  "ingredients": [
+    { "ingredient": "vegetarian-burger-patties", "amount": "2" },
+    { "ingredient": "burger-buns", "amount": "2" },
+    { "ingredient": "potatoes", "amount": "500g" },
+    { "ingredient": "cheddar", "amount": "2 slices" },
+    { "ingredient": "lettuce", "amount": "handful" },
+    { "ingredient": "ketchup", "amount": "2 tbsp", "dominant": false }
+  ],
+  "notes": "Ketchup is a background ingredient, so this remains a good fit."
+}

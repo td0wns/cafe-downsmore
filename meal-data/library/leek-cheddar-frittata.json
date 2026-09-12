@@ -1,0 +1,15 @@
+{
+  "id": "leek-cheddar-frittata",
+  "name": "Leek & cheddar frittata",
+  "category": "Light",
+  "tags": ["Suggestions", "European", "Light"],
+  "minutes": 35,
+  "ingredients": [
+    { "ingredient": "eggs", "amount": "6" },
+    { "ingredient": "leek", "amount": "1", "dominant": false },
+    { "ingredient": "cheddar", "amount": "100g" },
+    { "ingredient": "new-potatoes", "amount": "300g" },
+    { "ingredient": "spinach", "amount": "100g" }
+  ],
+  "notes": "Moderate leek; swap for courgette on a sensitive week."
+}

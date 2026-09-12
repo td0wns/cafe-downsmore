@@ -1,0 +1,246 @@
+{
+  "arborio-rice": {
+    "name": "arborio rice",
+    "vegetarian": true
+  },
+  "aubergine": {
+    "name": "aubergine",
+    "vegetarian": true
+  },
+  "avocado": {
+    "name": "avocado",
+    "vegetarian": true
+  },
+  "baby-potatoes": {
+    "name": "baby potatoes",
+    "vegetarian": true
+  },
+  "baking-potatoes": {
+    "name": "baking potatoes",
+    "vegetarian": true
+  },
+  "basmati-rice": {
+    "name": "basmati rice",
+    "vegetarian": true
+  },
+  "broccoli": {
+    "name": "broccoli",
+    "vegetarian": true
+  },
+  "burger-buns": {
+    "name": "burger buns",
+    "vegetarian": true
+  },
+  "butter": {
+    "name": "butter",
+    "vegetarian": true
+  },
+  "butternut-squash": {
+    "name": "butternut squash",
+    "vegetarian": true
+  },
+  "carrots": {
+    "name": "carrots",
+    "vegetarian": true
+  },
+  "cheddar": {
+    "name": "cheddar",
+    "vegetarian": true
+  },
+  "coriander": {
+    "name": "coriander",
+    "vegetarian": true
+  },
+  "courgette": {
+    "name": "courgette",
+    "vegetarian": true
+  },
+  "cucumber": {
+    "name": "cucumber",
+    "vegetarian": true
+  },
+  "dijon-mustard": {
+    "name": "Dijon mustard",
+    "vegetarian": true,
+    "concern": "vinegar"
+  },
+  "eggs": {
+    "name": "eggs",
+    "vegetarian": true
+  },
+  "feta": {
+    "name": "feta",
+    "vegetarian": true
+  },
+  "firm-tofu": {
+    "name": "firm tofu",
+    "vegetarian": true
+  },
+  "flatbreads": {
+    "name": "flatbreads",
+    "vegetarian": true
+  },
+  "flour-tortillas": {
+    "name": "flour tortillas",
+    "vegetarian": true
+  },
+  "frozen-peas": {
+    "name": "frozen peas",
+    "vegetarian": true
+  },
+  "ginger": {
+    "name": "ginger",
+    "vegetarian": true
+  },
+  "ground-cumin": {
+    "name": "ground cumin",
+    "vegetarian": true
+  },
+  "halloumi": {
+    "name": "halloumi",
+    "vegetarian": true
+  },
+  "ketchup": {
+    "name": "ketchup",
+    "vegetarian": true,
+    "concern": "tomato"
+  },
+  "leek": {
+    "name": "leek",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "lemon": {
+    "name": "lemon",
+    "vegetarian": true
+  },
+  "lettuce": {
+    "name": "lettuce",
+    "vegetarian": true
+  },
+  "lime": {
+    "name": "lime",
+    "vegetarian": true
+  },
+  "milk": {
+    "name": "milk",
+    "vegetarian": true
+  },
+  "mint": {
+    "name": "mint",
+    "vegetarian": true
+  },
+  "mozzarella": {
+    "name": "mozzarella",
+    "vegetarian": true
+  },
+  "new-potatoes": {
+    "name": "new potatoes",
+    "vegetarian": true
+  },
+  "noodles": {
+    "name": "noodles",
+    "vegetarian": true
+  },
+  "nutmeg": {
+    "name": "nutmeg",
+    "vegetarian": true
+  },
+  "orzo": {
+    "name": "orzo",
+    "vegetarian": true
+  },
+  "paneer": {
+    "name": "paneer",
+    "vegetarian": true
+  },
+  "parmesan-style-vegetarian-cheese": {
+    "name": "Parmesan-style vegetarian cheese",
+    "vegetarian": true
+  },
+  "pasta": {
+    "name": "pasta",
+    "vegetarian": true
+  },
+  "plain-flour": {
+    "name": "plain flour",
+    "vegetarian": true
+  },
+  "potato-gnocchi": {
+    "name": "potato gnocchi",
+    "vegetarian": true
+  },
+  "potatoes": {
+    "name": "potatoes",
+    "vegetarian": true
+  },
+  "red-peppers": {
+    "name": "red peppers",
+    "vegetarian": true
+  },
+  "rice": {
+    "name": "rice",
+    "vegetarian": true
+  },
+  "ricotta": {
+    "name": "ricotta",
+    "vegetarian": true
+  },
+  "sage": {
+    "name": "sage",
+    "vegetarian": true
+  },
+  "sesame-oil": {
+    "name": "sesame oil",
+    "vegetarian": true
+  },
+  "sesame-seeds": {
+    "name": "sesame seeds",
+    "vegetarian": true
+  },
+  "smoked-paprika": {
+    "name": "smoked paprika",
+    "vegetarian": true
+  },
+  "sour-cream": {
+    "name": "sour cream",
+    "vegetarian": true
+  },
+  "soy-sauce": {
+    "name": "soy sauce",
+    "vegetarian": true
+  },
+  "spinach": {
+    "name": "spinach",
+    "vegetarian": true
+  },
+  "spring-onion-greens": {
+    "name": "spring onion greens",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "sweetcorn": {
+    "name": "sweetcorn",
+    "vegetarian": true
+  },
+  "vegetable-stock": {
+    "name": "vegetable stock",
+    "vegetarian": true
+  },
+  "vegetarian-burger-patties": {
+    "name": "vegetarian burger patties",
+    "vegetarian": true
+  },
+  "vegetarian-hard-cheese": {
+    "name": "vegetarian hard cheese",
+    "vegetarian": true
+  },
+  "vegetarian-sausages": {
+    "name": "vegetarian sausages",
+    "vegetarian": true
+  },
+  "yoghurt": {
+    "name": "yoghurt",
+    "vegetarian": true
+  }
+}

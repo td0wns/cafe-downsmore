@@ -1,0 +1,16 @@
+{
+  "id": "pea-mint-risotto",
+  "name": "Pea, mint & lemon risotto",
+  "category": "Weekend",
+  "tags": ["Suggestions", "Italian", "Fresh"],
+  "minutes": 45,
+  "ingredients": [
+    { "ingredient": "arborio-rice", "amount": "180g" },
+    { "ingredient": "frozen-peas", "amount": "250g" },
+    { "ingredient": "vegetable-stock", "amount": "750ml" },
+    { "ingredient": "parmesan-style-vegetarian-cheese", "amount": "60g" },
+    { "ingredient": "lemon", "amount": "1" },
+    { "ingredient": "mint", "amount": "small bunch" }
+  ],
+  "notes": "Fresh and creamy without wine, onion or garlic."
+}

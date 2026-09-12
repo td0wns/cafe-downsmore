@@ -1,0 +1,17 @@
+{
+  "id": "crispy-tofu-bowls",
+  "name": "Crispy tofu rice bowls",
+  "category": "Weeknight",
+  "tags": ["Suggestions", "Asian", "Japanese-inspired"],
+  "minutes": 35,
+  "ingredients": [
+    { "ingredient": "firm-tofu", "amount": "400g" },
+    { "ingredient": "rice", "amount": "180g" },
+    { "ingredient": "broccoli", "amount": "1 head" },
+    { "ingredient": "carrots", "amount": "2" },
+    { "ingredient": "soy-sauce", "amount": "3 tbsp" },
+    { "ingredient": "sesame-oil", "amount": "1 tsp" },
+    { "ingredient": "ginger", "amount": "thumb-sized" }
+  ],
+  "notes": "Use soy-and-ginger sauce; no coconut milk."
+}

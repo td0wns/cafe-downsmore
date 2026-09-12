@@ -1,0 +1,17 @@
+{
+  "id": "suggested-sesame-noodles",
+  "name": "Sesame aubergine noodles",
+  "category": "Weeknight",
+  "tags": ["Suggestions", "Asian", "Japanese-inspired"],
+  "minutes": 35,
+  "ingredients": [
+    { "ingredient": "aubergine", "amount": "2" },
+    { "ingredient": "noodles", "amount": "200g" },
+    { "ingredient": "cucumber", "amount": "1" },
+    { "ingredient": "soy-sauce", "amount": "3 tbsp" },
+    { "ingredient": "sesame-oil", "amount": "1 tbsp" },
+    { "ingredient": "ginger", "amount": "thumb-sized" },
+    { "ingredient": "sesame-seeds", "amount": "2 tbsp" }
+  ],
+  "notes": "Sticky soy-ginger glaze with crisp cucumber."
+}

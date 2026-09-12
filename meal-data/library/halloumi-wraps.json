@@ -1,0 +1,16 @@
+{
+  "id": "halloumi-wraps",
+  "name": "Halloumi & roasted pepper wraps",
+  "category": "Quick",
+  "tags": ["Suggestions", "Middle Eastern", "Fresh"],
+  "minutes": 25,
+  "ingredients": [
+    { "ingredient": "halloumi", "amount": "225g" },
+    { "ingredient": "red-peppers", "amount": "2" },
+    { "ingredient": "flatbreads", "amount": "4" },
+    { "ingredient": "lettuce", "amount": "1 small" },
+    { "ingredient": "yoghurt", "amount": "4 tbsp" },
+    { "ingredient": "lemon", "amount": "1" }
+  ],
+  "notes": "Good with oven chips or a simple green salad."
+}

@@ -1,0 +1,14 @@
+{
+  "id": "example-meal-id",
+  "name": "Example meal name",
+  "category": "Weeknight",
+  "tags": ["Our meals", "Cuisine or flavour tag"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "existing-ingredient-id", "amount": "amount to buy" }
+  ],
+  "notes": "Short practical note about the meal.",
+  "recipeUrl": "https://example.com/optional-recipe",
+  "preMade": false,
+  "separateVersions": false
+}

@@ -19,7 +19,7 @@ A small, static meal library and weekly planner for two. It encodes the househol
 - Marks pre-made meals so their grocery entries remain package-level products rather than inferred scratch ingredients.
 - Keeps the meal library read-only in the website so recipes and ingredients remain controlled by the published data.
 
-Meals, ingredients, tags and recipe links are maintained in `dist/data/meals.json` and published through the repository. Weekly plans, retained previous-week data and cooking history are saved in the browser.
+Meal source files live in `meal-data/library/` and `meal-data/suggestions/`. Canonical ingredients, allowed tags and household preferences live beside them in `meal-data/`. Running `node scripts/build-meal-data.mjs` validates the catalogue and generates the files in `dist/data/` that the website reads. Weekly plans, retained previous-week data and cooking history are saved in the browser.
 
 Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state stores `weekStart`, up to 10 `previousWeek.mealIds`, and per-meal cooking history.
 
@@ -31,4 +31,4 @@ For ChatGPT to read the meal library directly, the repository must be public. It
 
 `https://raw.githubusercontent.com/td0wns/cafe-downsmore/main/dist/data/meals.json`
 
-The meal library is updated through the repository rather than edited in the browser.
+The meal library is updated through the repository rather than edited in the browser. Project-wide instructions for safely adding meals are in `AGENTS.md`.

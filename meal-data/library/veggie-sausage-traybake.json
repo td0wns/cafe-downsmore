@@ -1,0 +1,15 @@
+{
+  "id": "veggie-sausage-traybake",
+  "name": "Veggie sausage traybake",
+  "category": "One tray",
+  "tags": ["Suggestions", "Mediterranean", "Smoky"],
+  "minutes": 50,
+  "ingredients": [
+    { "ingredient": "vegetarian-sausages", "amount": "6" },
+    { "ingredient": "baby-potatoes", "amount": "500g" },
+    { "ingredient": "courgette", "amount": "2" },
+    { "ingredient": "red-peppers", "amount": "2" },
+    { "ingredient": "smoked-paprika", "amount": "1 tsp" }
+  ],
+  "notes": "Minimal prep and easy to scale."
+}

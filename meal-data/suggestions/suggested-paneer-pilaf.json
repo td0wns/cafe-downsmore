@@ -1,0 +1,18 @@
+{
+  "id": "suggested-paneer-pilaf",
+  "name": "Paneer, pepper & pea pilaf",
+  "category": "One pan",
+  "tags": ["Suggestions", "Indian-inspired", "Aromatic"],
+  "minutes": 40,
+  "ingredients": [
+    { "ingredient": "paneer", "amount": "225g" },
+    { "ingredient": "basmati-rice", "amount": "180g" },
+    { "ingredient": "red-peppers", "amount": "2" },
+    { "ingredient": "frozen-peas", "amount": "150g" },
+    { "ingredient": "vegetable-stock", "amount": "400ml" },
+    { "ingredient": "lemon", "amount": "1" },
+    { "ingredient": "coriander", "amount": "small bunch" },
+    { "ingredient": "ground-cumin", "amount": "1 tsp" }
+  ],
+  "notes": "Mildly spiced, fresh and coconut-free."
+}

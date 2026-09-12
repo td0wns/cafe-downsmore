@@ -1,0 +1,17 @@
+{
+  "id": "suggested-spinach-quesadillas",
+  "name": "Cheese & spinach quesadillas",
+  "category": "Quick",
+  "tags": ["Suggestions", "Mexican-inspired", "Fresh"],
+  "minutes": 25,
+  "ingredients": [
+    { "ingredient": "flour-tortillas", "amount": "6" },
+    { "ingredient": "cheddar", "amount": "180g" },
+    { "ingredient": "spinach", "amount": "150g" },
+    { "ingredient": "sweetcorn", "amount": "150g" },
+    { "ingredient": "avocado", "amount": "1" },
+    { "ingredient": "lime", "amount": "1" },
+    { "ingredient": "yoghurt", "amount": "100g" }
+  ],
+  "notes": "Crisp quesadillas with lime yoghurt and avocado."
+}

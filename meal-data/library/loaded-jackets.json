@@ -1,0 +1,15 @@
+{
+  "id": "loaded-jackets",
+  "name": "Loaded jacket potatoes",
+  "category": "Easy",
+  "tags": ["Suggestions", "British", "Comfort"],
+  "minutes": 65,
+  "ingredients": [
+    { "ingredient": "baking-potatoes", "amount": "2 large" },
+    { "ingredient": "cheddar", "amount": "100g" },
+    { "ingredient": "sweetcorn", "amount": "150g" },
+    { "ingredient": "spring-onion-greens", "amount": "2", "optional": true },
+    { "ingredient": "sour-cream", "amount": "4 tbsp" }
+  ],
+  "notes": "Flexible filling night; keep onion optional."
+}

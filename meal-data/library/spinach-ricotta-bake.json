@@ -1,0 +1,16 @@
+{
+  "id": "spinach-ricotta-bake",
+  "name": "Spinach & ricotta pasta bake",
+  "category": "Comfort",
+  "tags": ["Suggestions", "Italian", "Comfort"],
+  "minutes": 50,
+  "ingredients": [
+    { "ingredient": "pasta", "amount": "300g" },
+    { "ingredient": "spinach", "amount": "250g" },
+    { "ingredient": "ricotta", "amount": "250g" },
+    { "ingredient": "mozzarella", "amount": "125g" },
+    { "ingredient": "milk", "amount": "350ml" },
+    { "ingredient": "nutmeg", "amount": "pinch" }
+  ],
+  "notes": "A white-sauce bake rather than a tomato-led one."
+}

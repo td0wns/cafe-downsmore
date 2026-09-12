@@ -2,48 +2,12 @@ const STORE_KEY = "our-table-v1";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const MAX_LAST_WEEK_MEALS = 10;
 const MAX_PICKER_RESULTS = 60;
-const NON_PALETTE_TAGS = new Set(["suggestions", "our meals", "pre-made", "budget friendly", "simple to make", "quick", "easy", "one tray", "spring", "summer", "autumn", "winter"]);
-const NEW_IDEAS = [
-  {
-    id: "suggested-feta-fritters", name: "Sweetcorn, courgette & feta fritters", category: "Quick", minutes: 30,
-    tags: ["Suggestions", "European", "Fresh"],
-    ingredients: [{name:"sweetcorn",amount:"300g"},{name:"courgette",amount:"1 large"},{name:"feta",amount:"150g"},{name:"eggs",amount:"2"},{name:"plain flour",amount:"80g"},{name:"yoghurt",amount:"150g"},{name:"lemon",amount:"1"},{name:"baby potatoes",amount:"400g"}],
-    notes: "Serve with lemon yoghurt and herby potatoes.", lastCooked: null, timesCooked: 0
-  },
-  {
-    id: "suggested-broccoli-orzo", name: "Broccoli & cheddar orzo", category: "One pan", minutes: 30,
-    tags: ["Suggestions", "Italian", "Comfort"],
-    ingredients: [{name:"orzo",amount:"200g"},{name:"broccoli",amount:"1 head"},{name:"frozen peas",amount:"150g"},{name:"vegetable stock",amount:"600ml"},{name:"cheddar",amount:"120g"},{name:"Dijon mustard",amount:"1 tsp",concern:"vinegar",dominant:false}],
-    notes: "Creamy one-pan orzo; mustard stays in the background.", lastCooked: null, timesCooked: 0
-  },
-  {
-    id: "suggested-sesame-noodles", name: "Sesame aubergine noodles", category: "Weeknight", minutes: 35,
-    tags: ["Suggestions", "Asian", "Japanese-inspired"],
-    ingredients: [{name:"aubergine",amount:"2"},{name:"noodles",amount:"200g"},{name:"cucumber",amount:"1"},{name:"soy sauce",amount:"3 tbsp"},{name:"sesame oil",amount:"1 tbsp"},{name:"ginger",amount:"thumb-sized"},{name:"sesame seeds",amount:"2 tbsp"}],
-    notes: "Sticky soy-ginger glaze with crisp cucumber.", lastCooked: null, timesCooked: 0
-  },
-  {
-    id: "suggested-squash-gnocchi", name: "Butternut squash & sage gnocchi", category: "Weekend", minutes: 45,
-    tags: ["Suggestions", "Italian", "Autumn"],
-    ingredients: [{name:"potato gnocchi",amount:"500g"},{name:"butternut squash",amount:"1 small"},{name:"spinach",amount:"150g"},{name:"butter",amount:"60g"},{name:"sage",amount:"small bunch"},{name:"vegetarian hard cheese",amount:"60g"}],
-    notes: "Brown butter, wilted spinach and crisp sage.", lastCooked: null, timesCooked: 0
-  },
-  {
-    id: "suggested-paneer-pilaf", name: "Paneer, pepper & pea pilaf", category: "One pan", minutes: 40,
-    tags: ["Suggestions", "Indian-inspired", "Aromatic"],
-    ingredients: [{name:"paneer",amount:"225g"},{name:"basmati rice",amount:"180g"},{name:"red peppers",amount:"2"},{name:"frozen peas",amount:"150g"},{name:"vegetable stock",amount:"400ml"},{name:"lemon",amount:"1"},{name:"coriander",amount:"small bunch"},{name:"ground cumin",amount:"1 tsp"}],
-    notes: "Mildly spiced, fresh and coconut-free.", lastCooked: null, timesCooked: 0
-  },
-  {
-    id: "suggested-spinach-quesadillas", name: "Cheese & spinach quesadillas", category: "Quick", minutes: 25,
-    tags: ["Suggestions", "Mexican-inspired", "Fresh"],
-    ingredients: [{name:"flour tortillas",amount:"6"},{name:"cheddar",amount:"180g"},{name:"spinach",amount:"150g"},{name:"sweetcorn",amount:"150g"},{name:"avocado",amount:"1"},{name:"lime",amount:"1"},{name:"yoghurt",amount:"100g"}],
-    notes: "Crisp quesadillas with lime yoghurt and avocado.", lastCooked: null, timesCooked: 0
-  }
-];
 
 let state = { meals: [], week: emptyWeek(), weekStart: "", previousWeek: null, suggestionSources: {previous:true, current:true} };
 let defaultMeals = [];
+let suggestedMeals = [];
+let tagCatalogue = [];
+let paletteTags = new Set();
 let activeTag = "All";
 let comparisonId = null;
 let shuffleSeed = 0;
@@ -151,7 +115,12 @@ function normaliseRecipeUrl(value) {
 }
 
 async function init() {
-  defaultMeals = await fetch("data/meals.json").then(response => response.json());
+  [defaultMeals, suggestedMeals, tagCatalogue] = await Promise.all([
+    fetch("data/meals.json").then(response => response.json()),
+    fetch("data/suggestions.json").then(response => response.json()),
+    fetch("data/tags.json").then(response => response.json())
+  ]);
+  paletteTags = new Set(tagCatalogue.filter(tag => tag.palette).map(tag => tag.name.toLowerCase()));
   const saved = localStorage.getItem(STORE_KEY);
   let savedState = {};
   if (saved) {
@@ -393,7 +362,8 @@ function ingredientBadges(item) {
 }
 
 function getAllTags() {
-  return [...new Set(state.meals.flatMap(meal => [...(meal.tags || []), ...(meal.preMade ? ["Pre-made"] : [])]))].sort((a,b) => a.localeCompare(b));
+  const present = new Set(state.meals.flatMap(meal => [...(meal.tags || []), ...(meal.preMade ? ["Pre-made"] : [])]));
+  return tagCatalogue.map(tag => tag.name).filter(tag => present.has(tag));
 }
 
 function tagMarkup(tags = [], preMade = false) {
@@ -420,7 +390,7 @@ function renderLibrary() {
 }
 
 function tasteTags(meal) {
-  return (meal.tags || []).filter(tag => !NON_PALETTE_TAGS.has(tag.toLowerCase()));
+  return (meal.tags || []).filter(tag => paletteTags.has(tag.toLowerCase()));
 }
 
 function paletteCounts() {
@@ -485,7 +455,7 @@ function renderIdeas() {
   if (excludedIds.has(comparisonId)) comparisonId = null;
   const candidates = state.meals.filter(meal => !excludedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3).sort((a,b) => a.name.localeCompare(b.name));
   $("#unused-grid").innerHTML = candidates.length ? candidates.map(meal => ideaCard(meal, balanceReason(meal, counts), false)).join("") : `<div class="empty">Every library meal is already in last week or this week.</div>`;
-  const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id) && !excludedIds.has(idea.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3).sort((a,b) => a.name.localeCompare(b.name));
+  const freshIdeas = suggestedMeals.filter(idea => !state.meals.some(meal => meal.id === idea.id) && !excludedIds.has(idea.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3).sort((a,b) => a.name.localeCompare(b.name));
   $("#new-grid").innerHTML = freshIdeas.length ? freshIdeas.map(meal => ideaCard(meal, balanceReason(meal, counts), true)).join("") : `<div class="empty">You have saved or already selected all current suggestions.</div>`;
   $$('[data-compare]').forEach(button => button.addEventListener("click", () => { comparisonId = button.dataset.compare; renderComparison(); $("#comparison-panel").scrollIntoView({behavior:"smooth", block:"start"}); }));
   renderComparison();
@@ -502,7 +472,7 @@ function ideaCard(meal, reason, isNew) {
 }
 
 function findAnyMeal(id) {
-  return state.meals.find(meal => meal.id === id) || NEW_IDEAS.find(meal => meal.id === id);
+  return state.meals.find(meal => meal.id === id) || suggestedMeals.find(meal => meal.id === id);
 }
 
 function renderComparison() {

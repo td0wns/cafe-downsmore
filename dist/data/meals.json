@@ -1,126 +1,102 @@
 [
   {
-    "id": "halloumi-wraps",
-    "name": "Halloumi & roasted pepper wraps",
-    "category": "Quick",
-    "tags": ["Suggestions", "Middle Eastern", "Fresh"],
-    "minutes": 25,
-    "ingredients": [
-      { "name": "halloumi", "amount": "225g" },
-      { "name": "red peppers", "amount": "2" },
-      { "name": "flatbreads", "amount": "4" },
-      { "name": "lettuce", "amount": "1 small" },
-      { "name": "yoghurt", "amount": "4 tbsp" },
-      { "name": "lemon", "amount": "1" }
-    ],
-    "notes": "Good with oven chips or a simple green salad.",
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
     "id": "crispy-tofu-bowls",
     "name": "Crispy tofu rice bowls",
     "category": "Weeknight",
-    "tags": ["Suggestions", "Asian", "Japanese-inspired"],
+    "tags": [
+      "Suggestions",
+      "Asian",
+      "Japanese-inspired"
+    ],
     "minutes": 35,
     "ingredients": [
-      { "name": "firm tofu", "amount": "400g" },
-      { "name": "rice", "amount": "180g" },
-      { "name": "broccoli", "amount": "1 head" },
-      { "name": "carrots", "amount": "2" },
-      { "name": "soy sauce", "amount": "3 tbsp" },
-      { "name": "sesame oil", "amount": "1 tsp" },
-      { "name": "ginger", "amount": "thumb-sized" }
+      {
+        "ingredientId": "firm-tofu",
+        "name": "firm tofu",
+        "amount": "400g"
+      },
+      {
+        "ingredientId": "rice",
+        "name": "rice",
+        "amount": "180g"
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "broccoli",
+        "amount": "1 head"
+      },
+      {
+        "ingredientId": "carrots",
+        "name": "carrots",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "soy sauce",
+        "amount": "3 tbsp"
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "sesame oil",
+        "amount": "1 tsp"
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "ginger",
+        "amount": "thumb-sized"
+      }
     ],
     "notes": "Use soy-and-ginger sauce; no coconut milk.",
+    "preMade": false,
+    "separateVersions": false,
     "lastCooked": null,
     "timesCooked": 0
   },
   {
-    "id": "spinach-ricotta-bake",
-    "name": "Spinach & ricotta pasta bake",
-    "category": "Comfort",
-    "tags": ["Suggestions", "Italian", "Comfort"],
-    "minutes": 50,
-    "ingredients": [
-      { "name": "pasta", "amount": "300g" },
-      { "name": "spinach", "amount": "250g" },
-      { "name": "ricotta", "amount": "250g" },
-      { "name": "mozzarella", "amount": "125g" },
-      { "name": "milk", "amount": "350ml" },
-      { "name": "nutmeg", "amount": "pinch" }
+    "id": "halloumi-wraps",
+    "name": "Halloumi & roasted pepper wraps",
+    "category": "Quick",
+    "tags": [
+      "Suggestions",
+      "Middle Eastern",
+      "Fresh"
     ],
-    "notes": "A white-sauce bake rather than a tomato-led one.",
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
-    "id": "loaded-jackets",
-    "name": "Loaded jacket potatoes",
-    "category": "Easy",
-    "tags": ["Suggestions", "British", "Comfort"],
-    "minutes": 65,
+    "minutes": 25,
     "ingredients": [
-      { "name": "baking potatoes", "amount": "2 large" },
-      { "name": "cheddar", "amount": "100g" },
-      { "name": "sweetcorn", "amount": "150g" },
-      { "name": "spring onion greens", "amount": "2", "optional": true },
-      { "name": "sour cream", "amount": "4 tbsp" }
+      {
+        "ingredientId": "halloumi",
+        "name": "halloumi",
+        "amount": "225g"
+      },
+      {
+        "ingredientId": "red-peppers",
+        "name": "red peppers",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "flatbreads",
+        "name": "flatbreads",
+        "amount": "4"
+      },
+      {
+        "ingredientId": "lettuce",
+        "name": "lettuce",
+        "amount": "1 small"
+      },
+      {
+        "ingredientId": "yoghurt",
+        "name": "yoghurt",
+        "amount": "4 tbsp"
+      },
+      {
+        "ingredientId": "lemon",
+        "name": "lemon",
+        "amount": "1"
+      }
     ],
-    "notes": "Flexible filling night; keep onion optional.",
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
-    "id": "veggie-burgers",
-    "name": "Veggie burgers & wedges",
-    "category": "Favourite",
-    "tags": ["Suggestions", "American", "Comfort"],
-    "minutes": 40,
-    "ingredients": [
-      { "name": "vegetarian burger patties", "amount": "2" },
-      { "name": "burger buns", "amount": "2" },
-      { "name": "potatoes", "amount": "500g" },
-      { "name": "cheddar", "amount": "2 slices" },
-      { "name": "lettuce", "amount": "handful" },
-      { "name": "ketchup", "amount": "2 tbsp", "concern": "tomato", "dominant": false }
-    ],
-    "notes": "Ketchup is a background ingredient, so this remains a good fit.",
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
-    "id": "pea-mint-risotto",
-    "name": "Pea, mint & lemon risotto",
-    "category": "Weekend",
-    "tags": ["Suggestions", "Italian", "Fresh"],
-    "minutes": 45,
-    "ingredients": [
-      { "name": "arborio rice", "amount": "180g" },
-      { "name": "frozen peas", "amount": "250g" },
-      { "name": "vegetable stock", "amount": "750ml" },
-      { "name": "parmesan-style vegetarian cheese", "amount": "60g" },
-      { "name": "lemon", "amount": "1" },
-      { "name": "mint", "amount": "small bunch" }
-    ],
-    "notes": "Fresh and creamy without wine, onion or garlic.",
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
-    "id": "veggie-sausage-traybake",
-    "name": "Veggie sausage traybake",
-    "category": "One tray",
-    "tags": ["Suggestions", "Mediterranean", "Smoky"],
-    "minutes": 50,
-    "ingredients": [
-      { "name": "vegetarian sausages", "amount": "6" },
-      { "name": "baby potatoes", "amount": "500g" },
-      { "name": "courgettes", "amount": "2" },
-      { "name": "red peppers", "amount": "2" },
-      { "name": "smoked paprika", "amount": "1 tsp" }
-    ],
-    "notes": "Minimal prep and easy to scale.",
+    "notes": "Good with oven chips or a simple green salad.",
+    "preMade": false,
+    "separateVersions": false,
     "lastCooked": null,
     "timesCooked": 0
   },
@@ -128,16 +104,278 @@
     "id": "leek-cheddar-frittata",
     "name": "Leek & cheddar frittata",
     "category": "Light",
-    "tags": ["Suggestions", "European", "Light"],
+    "tags": [
+      "Suggestions",
+      "European",
+      "Light"
+    ],
     "minutes": 35,
     "ingredients": [
-      { "name": "eggs", "amount": "6" },
-      { "name": "leek", "amount": "1", "concern": "onion", "dominant": false },
-      { "name": "cheddar", "amount": "100g" },
-      { "name": "new potatoes", "amount": "300g" },
-      { "name": "spinach", "amount": "100g" }
+      {
+        "ingredientId": "eggs",
+        "name": "eggs",
+        "amount": "6"
+      },
+      {
+        "ingredientId": "leek",
+        "name": "leek",
+        "amount": "1",
+        "concern": "onion",
+        "dominant": false
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "100g"
+      },
+      {
+        "ingredientId": "new-potatoes",
+        "name": "new potatoes",
+        "amount": "300g"
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "spinach",
+        "amount": "100g"
+      }
     ],
     "notes": "Moderate leek; swap for courgette on a sensitive week.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "loaded-jackets",
+    "name": "Loaded jacket potatoes",
+    "category": "Easy",
+    "tags": [
+      "Suggestions",
+      "British",
+      "Comfort"
+    ],
+    "minutes": 65,
+    "ingredients": [
+      {
+        "ingredientId": "baking-potatoes",
+        "name": "baking potatoes",
+        "amount": "2 large"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "100g"
+      },
+      {
+        "ingredientId": "sweetcorn",
+        "name": "sweetcorn",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "spring-onion-greens",
+        "name": "spring onion greens",
+        "amount": "2",
+        "concern": "onion",
+        "optional": true
+      },
+      {
+        "ingredientId": "sour-cream",
+        "name": "sour cream",
+        "amount": "4 tbsp"
+      }
+    ],
+    "notes": "Flexible filling night; keep onion optional.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "pea-mint-risotto",
+    "name": "Pea, mint & lemon risotto",
+    "category": "Weekend",
+    "tags": [
+      "Suggestions",
+      "Italian",
+      "Fresh"
+    ],
+    "minutes": 45,
+    "ingredients": [
+      {
+        "ingredientId": "arborio-rice",
+        "name": "arborio rice",
+        "amount": "180g"
+      },
+      {
+        "ingredientId": "frozen-peas",
+        "name": "frozen peas",
+        "amount": "250g"
+      },
+      {
+        "ingredientId": "vegetable-stock",
+        "name": "vegetable stock",
+        "amount": "750ml"
+      },
+      {
+        "ingredientId": "parmesan-style-vegetarian-cheese",
+        "name": "Parmesan-style vegetarian cheese",
+        "amount": "60g"
+      },
+      {
+        "ingredientId": "lemon",
+        "name": "lemon",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "mint",
+        "name": "mint",
+        "amount": "small bunch"
+      }
+    ],
+    "notes": "Fresh and creamy without wine, onion or garlic.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "spinach-ricotta-bake",
+    "name": "Spinach & ricotta pasta bake",
+    "category": "Comfort",
+    "tags": [
+      "Suggestions",
+      "Italian",
+      "Comfort"
+    ],
+    "minutes": 50,
+    "ingredients": [
+      {
+        "ingredientId": "pasta",
+        "name": "pasta",
+        "amount": "300g"
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "spinach",
+        "amount": "250g"
+      },
+      {
+        "ingredientId": "ricotta",
+        "name": "ricotta",
+        "amount": "250g"
+      },
+      {
+        "ingredientId": "mozzarella",
+        "name": "mozzarella",
+        "amount": "125g"
+      },
+      {
+        "ingredientId": "milk",
+        "name": "milk",
+        "amount": "350ml"
+      },
+      {
+        "ingredientId": "nutmeg",
+        "name": "nutmeg",
+        "amount": "pinch"
+      }
+    ],
+    "notes": "A white-sauce bake rather than a tomato-led one.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "veggie-burgers",
+    "name": "Veggie burgers & wedges",
+    "category": "Favourite",
+    "tags": [
+      "Suggestions",
+      "American",
+      "Comfort"
+    ],
+    "minutes": 40,
+    "ingredients": [
+      {
+        "ingredientId": "vegetarian-burger-patties",
+        "name": "vegetarian burger patties",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "burger-buns",
+        "name": "burger buns",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "potatoes",
+        "name": "potatoes",
+        "amount": "500g"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "2 slices"
+      },
+      {
+        "ingredientId": "lettuce",
+        "name": "lettuce",
+        "amount": "handful"
+      },
+      {
+        "ingredientId": "ketchup",
+        "name": "ketchup",
+        "amount": "2 tbsp",
+        "concern": "tomato",
+        "dominant": false
+      }
+    ],
+    "notes": "Ketchup is a background ingredient, so this remains a good fit.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "veggie-sausage-traybake",
+    "name": "Veggie sausage traybake",
+    "category": "One tray",
+    "tags": [
+      "Suggestions",
+      "Mediterranean",
+      "Smoky"
+    ],
+    "minutes": 50,
+    "ingredients": [
+      {
+        "ingredientId": "vegetarian-sausages",
+        "name": "vegetarian sausages",
+        "amount": "6"
+      },
+      {
+        "ingredientId": "baby-potatoes",
+        "name": "baby potatoes",
+        "amount": "500g"
+      },
+      {
+        "ingredientId": "courgette",
+        "name": "courgette",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "red-peppers",
+        "name": "red peppers",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "smoked-paprika",
+        "name": "smoked paprika",
+        "amount": "1 tsp"
+      }
+    ],
+    "notes": "Minimal prep and easy to scale.",
+    "preMade": false,
+    "separateVersions": false,
     "lastCooked": null,
     "timesCooked": 0
   }

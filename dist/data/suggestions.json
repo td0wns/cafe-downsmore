@@ -1,0 +1,322 @@
+[
+  {
+    "id": "suggested-broccoli-orzo",
+    "name": "Broccoli & cheddar orzo",
+    "category": "One pan",
+    "tags": [
+      "Suggestions",
+      "Italian",
+      "Comfort"
+    ],
+    "minutes": 30,
+    "ingredients": [
+      {
+        "ingredientId": "orzo",
+        "name": "orzo",
+        "amount": "200g"
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "broccoli",
+        "amount": "1 head"
+      },
+      {
+        "ingredientId": "frozen-peas",
+        "name": "frozen peas",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "vegetable-stock",
+        "name": "vegetable stock",
+        "amount": "600ml"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "120g"
+      },
+      {
+        "ingredientId": "dijon-mustard",
+        "name": "Dijon mustard",
+        "amount": "1 tsp",
+        "concern": "vinegar",
+        "dominant": false
+      }
+    ],
+    "notes": "Creamy one-pan orzo; mustard stays in the background.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "suggested-squash-gnocchi",
+    "name": "Butternut squash & sage gnocchi",
+    "category": "Weekend",
+    "tags": [
+      "Suggestions",
+      "Italian",
+      "Autumn"
+    ],
+    "minutes": 45,
+    "ingredients": [
+      {
+        "ingredientId": "potato-gnocchi",
+        "name": "potato gnocchi",
+        "amount": "500g"
+      },
+      {
+        "ingredientId": "butternut-squash",
+        "name": "butternut squash",
+        "amount": "1 small"
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "spinach",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "butter",
+        "name": "butter",
+        "amount": "60g"
+      },
+      {
+        "ingredientId": "sage",
+        "name": "sage",
+        "amount": "small bunch"
+      },
+      {
+        "ingredientId": "vegetarian-hard-cheese",
+        "name": "vegetarian hard cheese",
+        "amount": "60g"
+      }
+    ],
+    "notes": "Brown butter, wilted spinach and crisp sage.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "suggested-spinach-quesadillas",
+    "name": "Cheese & spinach quesadillas",
+    "category": "Quick",
+    "tags": [
+      "Suggestions",
+      "Mexican-inspired",
+      "Fresh"
+    ],
+    "minutes": 25,
+    "ingredients": [
+      {
+        "ingredientId": "flour-tortillas",
+        "name": "flour tortillas",
+        "amount": "6"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "180g"
+      },
+      {
+        "ingredientId": "spinach",
+        "name": "spinach",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "sweetcorn",
+        "name": "sweetcorn",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "avocado",
+        "name": "avocado",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "lime",
+        "name": "lime",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "yoghurt",
+        "name": "yoghurt",
+        "amount": "100g"
+      }
+    ],
+    "notes": "Crisp quesadillas with lime yoghurt and avocado.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "suggested-paneer-pilaf",
+    "name": "Paneer, pepper & pea pilaf",
+    "category": "One pan",
+    "tags": [
+      "Suggestions",
+      "Indian-inspired",
+      "Aromatic"
+    ],
+    "minutes": 40,
+    "ingredients": [
+      {
+        "ingredientId": "paneer",
+        "name": "paneer",
+        "amount": "225g"
+      },
+      {
+        "ingredientId": "basmati-rice",
+        "name": "basmati rice",
+        "amount": "180g"
+      },
+      {
+        "ingredientId": "red-peppers",
+        "name": "red peppers",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "frozen-peas",
+        "name": "frozen peas",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "vegetable-stock",
+        "name": "vegetable stock",
+        "amount": "400ml"
+      },
+      {
+        "ingredientId": "lemon",
+        "name": "lemon",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "coriander",
+        "name": "coriander",
+        "amount": "small bunch"
+      },
+      {
+        "ingredientId": "ground-cumin",
+        "name": "ground cumin",
+        "amount": "1 tsp"
+      }
+    ],
+    "notes": "Mildly spiced, fresh and coconut-free.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "suggested-sesame-noodles",
+    "name": "Sesame aubergine noodles",
+    "category": "Weeknight",
+    "tags": [
+      "Suggestions",
+      "Asian",
+      "Japanese-inspired"
+    ],
+    "minutes": 35,
+    "ingredients": [
+      {
+        "ingredientId": "aubergine",
+        "name": "aubergine",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "noodles",
+        "name": "noodles",
+        "amount": "200g"
+      },
+      {
+        "ingredientId": "cucumber",
+        "name": "cucumber",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "soy sauce",
+        "amount": "3 tbsp"
+      },
+      {
+        "ingredientId": "sesame-oil",
+        "name": "sesame oil",
+        "amount": "1 tbsp"
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "ginger",
+        "amount": "thumb-sized"
+      },
+      {
+        "ingredientId": "sesame-seeds",
+        "name": "sesame seeds",
+        "amount": "2 tbsp"
+      }
+    ],
+    "notes": "Sticky soy-ginger glaze with crisp cucumber.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "suggested-feta-fritters",
+    "name": "Sweetcorn, courgette & feta fritters",
+    "category": "Quick",
+    "tags": [
+      "Suggestions",
+      "European",
+      "Fresh"
+    ],
+    "minutes": 30,
+    "ingredients": [
+      {
+        "ingredientId": "sweetcorn",
+        "name": "sweetcorn",
+        "amount": "300g"
+      },
+      {
+        "ingredientId": "courgette",
+        "name": "courgette",
+        "amount": "1 large"
+      },
+      {
+        "ingredientId": "feta",
+        "name": "feta",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "eggs",
+        "name": "eggs",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "plain-flour",
+        "name": "plain flour",
+        "amount": "80g"
+      },
+      {
+        "ingredientId": "yoghurt",
+        "name": "yoghurt",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "lemon",
+        "name": "lemon",
+        "amount": "1"
+      },
+      {
+        "ingredientId": "baby-potatoes",
+        "name": "baby potatoes",
+        "amount": "400g"
+      }
+    ],
+    "notes": "Serve with lemon yoghurt and herby potatoes.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  }
+]

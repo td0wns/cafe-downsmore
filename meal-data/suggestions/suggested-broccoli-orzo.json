@@ -1,0 +1,16 @@
+{
+  "id": "suggested-broccoli-orzo",
+  "name": "Broccoli & cheddar orzo",
+  "category": "One pan",
+  "tags": ["Suggestions", "Italian", "Comfort"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "orzo", "amount": "200g" },
+    { "ingredient": "broccoli", "amount": "1 head" },
+    { "ingredient": "frozen-peas", "amount": "150g" },
+    { "ingredient": "vegetable-stock", "amount": "600ml" },
+    { "ingredient": "cheddar", "amount": "120g" },
+    { "ingredient": "dijon-mustard", "amount": "1 tsp", "dominant": false }
+  ],
+  "notes": "Creamy one-pan orzo; mustard stays in the background."
+}
