@@ -1,0 +1,26 @@
+{
+  "id": "broccoli-cheddar-soup",
+  "name": "Broccoli cheddar soup",
+  "category": "Soup",
+  "tags": ["Our meals", "American", "Comfort", "Quick"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "butter", "amount": "56g" },
+    { "ingredient": "onion", "amount": "1/2 medium", "dominant": false },
+    { "ingredient": "garlic", "amount": "2–3 cloves", "dominant": false },
+    { "ingredient": "plain-flour", "amount": "4 tbsp" },
+    { "ingredient": "vegetable-stock", "amount": "475ml" },
+    { "ingredient": "salt", "amount": "1 tsp" },
+    { "ingredient": "black-pepper", "amount": "1/2 tsp" },
+    { "ingredient": "nutmeg", "amount": "1/4 tsp", "optional": true },
+    { "ingredient": "broccoli", "amount": "1 large head" },
+    { "ingredient": "carrots", "amount": "1 large" },
+    { "ingredient": "milk", "amount": "475ml" },
+    { "ingredient": "cheddar", "amount": "225g" }
+  ],
+  "notes": "Makes four servings. Keep the onion and garlic as background flavours. Use vegetable stock and stir in the milk and freshly grated cheddar over low heat.",
+  "recipeUrl": "https://comfortplates.com/30-minute-broccoli-cheddar-soup-recipe/",
+  "preMade": false,
+  "separateVersions": false
+}
+

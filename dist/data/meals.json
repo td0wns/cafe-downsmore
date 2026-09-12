@@ -1,5 +1,90 @@
 [
   {
+    "id": "broccoli-cheddar-soup",
+    "name": "Broccoli cheddar soup",
+    "category": "Soup",
+    "tags": [
+      "Our meals",
+      "American",
+      "Comfort",
+      "Quick"
+    ],
+    "minutes": 30,
+    "ingredients": [
+      {
+        "ingredientId": "butter",
+        "name": "butter",
+        "amount": "56g"
+      },
+      {
+        "ingredientId": "onion",
+        "name": "onion",
+        "amount": "1/2 medium",
+        "concern": "onion",
+        "dominant": false
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "garlic",
+        "amount": "2–3 cloves",
+        "concern": "garlic",
+        "dominant": false
+      },
+      {
+        "ingredientId": "plain-flour",
+        "name": "plain flour",
+        "amount": "4 tbsp"
+      },
+      {
+        "ingredientId": "vegetable-stock",
+        "name": "vegetable stock",
+        "amount": "475ml"
+      },
+      {
+        "ingredientId": "salt",
+        "name": "salt",
+        "amount": "1 tsp"
+      },
+      {
+        "ingredientId": "black-pepper",
+        "name": "black pepper",
+        "amount": "1/2 tsp"
+      },
+      {
+        "ingredientId": "nutmeg",
+        "name": "nutmeg",
+        "amount": "1/4 tsp",
+        "optional": true
+      },
+      {
+        "ingredientId": "broccoli",
+        "name": "broccoli",
+        "amount": "1 large head"
+      },
+      {
+        "ingredientId": "carrots",
+        "name": "carrots",
+        "amount": "1 large"
+      },
+      {
+        "ingredientId": "milk",
+        "name": "milk",
+        "amount": "475ml"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "225g"
+      }
+    ],
+    "notes": "Makes four servings. Keep the onion and garlic as background flavours. Use vegetable stock and stir in the milk and freshly grated cheddar over low heat.",
+    "recipeUrl": "https://comfortplates.com/30-minute-broccoli-cheddar-soup-recipe/",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
     "id": "crispy-tofu-bowls",
     "name": "Crispy tofu rice bowls",
     "category": "Weeknight",
@@ -380,3 +465,4 @@
     "timesCooked": 0
   }
 ]
+

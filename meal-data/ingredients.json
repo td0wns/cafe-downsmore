@@ -96,6 +96,11 @@
     "name": "ground cumin",
     "vegetarian": true
   },
+  "garlic": {
+    "name": "garlic",
+    "vegetarian": true,
+    "concern": "garlic"
+  },
   "halloumi": {
     "name": "halloumi",
     "vegetarian": true
@@ -146,6 +151,11 @@
     "name": "nutmeg",
     "vegetarian": true
   },
+  "onion": {
+    "name": "onion",
+    "vegetarian": true,
+    "concern": "onion"
+  },
   "orzo": {
     "name": "orzo",
     "vegetarian": true
@@ -182,6 +192,10 @@
     "name": "rice",
     "vegetarian": true
   },
+  "salt": {
+    "name": "salt",
+    "vegetarian": true
+  },
   "ricotta": {
     "name": "ricotta",
     "vegetarian": true
@@ -214,6 +228,10 @@
     "name": "spinach",
     "vegetarian": true
   },
+  "black-pepper": {
+    "name": "black pepper",
+    "vegetarian": true
+  },
   "spring-onion-greens": {
     "name": "spring onion greens",
     "vegetarian": true,
@@ -244,3 +262,4 @@
     "vegetarian": true
   }
 }
+
