@@ -6,19 +6,21 @@ A small, static meal library and weekly planner for two. It encodes the househol
 
 - Stores a meal library with ingredient lists, notes, cook time and cooking history.
 - Plans seven dinners and builds a combined shopping list.
+- Automatically keeps the last planned week beside the current week. A newer planned week replaces it; otherwise it expires after two weeks.
 - Displays the ingredients pulled from every planned meal.
 - Uses cuisine and flavour tags to avoid an overloaded weekly palate.
 - Previews recommendations against the current grocery list and highlights new additions.
 - Surfaces meals that have never been logged or have not been cooked recently.
-- Supports custom meal tags and custom ingredient rows.
+- Uses a reusable tag catalogue: meals can only select saved tags, and new tags can be created from the meal form.
+- Saves an optional recipe link on each meal and exposes it from the library card.
 - Supports one dinner with shared ingredients plus separately cooked vegetarian and meat components.
 - Marks pre-made meals so their grocery entries remain package-level products rather than inferred scratch ingredients.
 - Exports/imports the full local dataset as JSON.
 - Copies a complete recommendation brief for ChatGPT.
 
-Data changes are saved in the browser. Export a backup after making important changes. The starter meal file is `dist/data/meals.json`.
+Data changes are saved in the browser. Export a backup after making important changes. Backups include the tag catalogue, current week and retained previous week. The starter meal file is `dist/data/meals.json`.
 
-Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true` and `preMade: true`.
+Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state also stores `tags`, `weekStart`, and a read-only `previousWeek` snapshot.
 
 ## GitHub Pages
 

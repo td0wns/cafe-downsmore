@@ -41,9 +41,21 @@
           <div>
             <p class="eyebrow blue">Weekly plan</p>
             <h2 id="week-title">What are we eating?</h2>
+            <p id="current-week-range" class="week-range"></p>
           </div>
           <button id="clear-week" class="button ghost">Clear week</button>
         </div>
+        <aside id="previous-week-panel" class="previous-week-panel" aria-labelledby="previous-week-title" hidden>
+          <div class="history-head">
+            <div>
+              <p class="eyebrow blue">Previous week</p>
+              <h3 id="previous-week-title">Recently planned</h3>
+              <p id="previous-week-range" class="week-range"></p>
+            </div>
+            <p>Kept for two weeks, unless a newer completed week replaces it.</p>
+          </div>
+          <div id="previous-week-grid" class="previous-week-grid"></div>
+        </aside>
         <div id="week-grid" class="week-grid"></div>
         <div class="week-summary">
           <div><span id="planned-count">0</span><small>meals planned</small></div>
@@ -87,7 +99,7 @@
         <aside class="palate-board">
           <div>
             <p class="eyebrow blue">Taste balance</p>
-            <h3>Palettes already in your plan</h3>
+            <h3>Palettes across this and the previous week</h3>
           </div>
           <div id="palate-snapshot" class="palate-snapshot"></div>
         </aside>
@@ -109,13 +121,13 @@
           <article class="data-card feature-card">
             <span class="step">01</span>
             <h3>Ask ChatGPT</h3>
-            <p>Copy a tidy summary of your preferences, library and current week, then paste it into our chat.</p>
+            <p>Copy a tidy summary of your preferences, library, current plan and previous week, then paste it into our chat.</p>
             <button id="copy-brief" class="button primary">Copy recommendation brief</button>
           </article>
           <article class="data-card">
             <span class="step">02</span>
             <h3>Save your data</h3>
-            <p>Your changes stay in this browser. Export a JSON backup whenever you add meals or mark one cooked.</p>
+            <p>Your changes stay in this browser. The backup includes meals, tags and both retained weeks.</p>
             <button id="export-data" class="button secondary">Export backup</button>
           </article>
           <article class="data-card">
@@ -141,7 +153,16 @@
           <label>Category<input id="meal-category" placeholder="e.g. Quick" /></label>
           <label>Minutes<input id="meal-minutes" type="number" min="1" max="600" placeholder="30" /></label>
         </div>
-        <label>Tags <small>Comma-separated, such as Asian, Spicy or Comfort</small><input id="meal-tags" placeholder="Asian, Fresh" /></label>
+        <label>Recipe link <small>Optional — paste the page you cook from.</small><input id="meal-recipe-url" type="text" inputmode="url" placeholder="https://…" /></label>
+        <fieldset class="tag-builder">
+          <legend>Tags</legend>
+          <p class="field-help">Choose from your standard list.</p>
+          <div id="meal-tag-options" class="tag-options"></div>
+          <div class="tag-create-row">
+            <label><span>New tag</span><input id="new-tag-name" placeholder="e.g. Greek" /></label>
+            <button type="button" id="create-meal-tag" class="button ghost">+ Create tag</button>
+          </div>
+        </fieldset>
         <div class="meal-options">
           <label class="option-card"><input id="meal-separate" type="checkbox" /><span><strong>Separate veggie & meat versions</strong><small>Assign each ingredient to both plates, the veggie plate or the meat plate.</small></span></label>
           <label class="option-card"><input id="meal-premade" type="checkbox" /><span><strong>Buy this pre-made</strong><small>List packs and sides to buy. We won’t turn them into scratch ingredients.</small></span></label>
