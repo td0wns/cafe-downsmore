@@ -11,16 +11,15 @@ A small, static meal library and weekly planner for two. It encodes the househol
 - Uses cuisine and flavour tags to avoid an overloaded weekly palate.
 - Previews recommendations against the current grocery list and highlights new additions.
 - Surfaces meals that have never been logged or have not been cooked recently.
-- Uses a reusable tag catalogue: meals can only select saved tags, and new tags can be created from the meal form.
+- Uses a consistent tag catalogue maintained with the meal data.
 - Saves an optional recipe link on each meal and exposes it from the library card.
 - Supports one dinner with shared ingredients plus separately cooked vegetarian and meat components.
 - Marks pre-made meals so their grocery entries remain package-level products rather than inferred scratch ingredients.
-- Exports/imports the full local dataset as JSON.
-- Copies a complete recommendation brief for ChatGPT.
+- Keeps the meal library read-only in the website so recipes and ingredients remain controlled by the published data.
 
-Data changes are saved in the browser. Export a backup after making important changes. Backups include the tag catalogue, current week and retained previous week. The starter meal file is `dist/data/meals.json`.
+Meals, ingredients, tags and recipe links are maintained in `dist/data/meals.json` and published through the repository. Weekly plans, retained previous-week data and cooking history are saved in the browser.
 
-Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state also stores `tags`, `weekStart`, and a read-only `previousWeek` snapshot.
+Ingredient records may include `scope: "shared"`, `scope: "vegetarian"`, or `scope: "meat"`; a missing scope means shared. Meals may include `separateVersions: true`, `preMade: true`, and an optional HTTP(S) `recipeUrl`. The local state stores `weekStart`, a read-only `previousWeek` snapshot and per-meal cooking history.
 
 ## GitHub Pages
 
@@ -28,6 +27,6 @@ This repository includes an automatic Pages workflow. In the GitHub repository s
 
 For ChatGPT to read the meal library directly, the repository must be public. Its raw data URL will be:
 
-`https://raw.githubusercontent.com/OWNER/REPOSITORY/main/dist/data/meals.json`
+`https://raw.githubusercontent.com/td0wns/cafe-downsmore/main/dist/data/meals.json`
 
-Browser edits do not automatically commit back to GitHub. Export the JSON backup and copy its `meals` array into `dist/data/meals.json` when you want the repository copy updated.
+The meal library is updated through the repository rather than edited in the browser.

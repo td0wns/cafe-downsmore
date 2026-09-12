@@ -33,7 +33,6 @@
         <button class="tab active" data-view="week">This week</button>
         <button class="tab" data-view="library">Meal library <span id="meal-count" class="count"></span></button>
         <button class="tab" data-view="ideas">Suggestions</button>
-        <button class="tab" data-view="data">Back up & share</button>
       </nav>
 
       <section id="week" class="view active" aria-labelledby="week-title">
@@ -80,7 +79,6 @@
             <p class="eyebrow blue">Your reliable choices</p>
             <h2 id="library-title">Meal library</h2>
           </div>
-          <button id="add-meal" class="button primary">+ Add a meal</button>
         </div>
         <div id="tag-filters" class="tag-filters" aria-label="Filter meals by tag"></div>
         <label class="search"><span>Search</span><input id="search" type="search" placeholder="Meal, ingredient, tag or note…" /></label>
@@ -110,77 +108,7 @@
         <section id="comparison-panel" class="comparison-panel" aria-live="polite"></section>
       </section>
 
-      <section id="data" class="view" aria-labelledby="data-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow blue">Portable by design</p>
-            <h2 id="data-title">Back up & ask for recommendations</h2>
-          </div>
-        </div>
-        <div class="data-grid">
-          <article class="data-card feature-card">
-            <span class="step">01</span>
-            <h3>Ask ChatGPT</h3>
-            <p>Copy a tidy summary of your preferences, library, current plan and previous week, then paste it into our chat.</p>
-            <button id="copy-brief" class="button primary">Copy recommendation brief</button>
-          </article>
-          <article class="data-card">
-            <span class="step">02</span>
-            <h3>Save your data</h3>
-            <p>Your changes stay in this browser. The backup includes meals, tags and both retained weeks.</p>
-            <button id="export-data" class="button secondary">Export backup</button>
-          </article>
-          <article class="data-card">
-            <span class="step">03</span>
-            <h3>Restore or move device</h3>
-            <p>Import a previous backup. It replaces the meal data currently saved in this browser.</p>
-            <label class="button secondary file-button">Import backup<input id="import-data" type="file" accept="application/json,.json" /></label>
-          </article>
-        </div>
-        <aside class="github-note">
-          <strong>GitHub connection</strong>
-          <p>This app is ready for GitHub Pages. Keep the exported file in the repository as <code>dist/data/meals.json</code>; if the repository is public, its raw link gives ChatGPT a read-only source for future meal planning.</p>
-        </aside>
-      </section>
     </main>
-
-    <dialog id="meal-dialog">
-      <form id="meal-form" method="dialog">
-        <div class="dialog-head"><div><p class="eyebrow blue">Library entry</p><h2 id="dialog-title">Add a meal</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button></div>
-        <input type="hidden" id="meal-id" />
-        <label>Meal name<input id="meal-name" required placeholder="e.g. Halloumi wraps" /></label>
-        <div class="form-row">
-          <label>Category<input id="meal-category" placeholder="e.g. Quick" /></label>
-          <label>Minutes<input id="meal-minutes" type="number" min="1" max="600" placeholder="30" /></label>
-        </div>
-        <label>Recipe link <small>Optional — paste the page you cook from.</small><input id="meal-recipe-url" type="text" inputmode="url" placeholder="https://…" /></label>
-        <fieldset class="tag-builder">
-          <legend>Tags</legend>
-          <p class="field-help">Choose from your standard list.</p>
-          <div id="meal-tag-options" class="tag-options"></div>
-          <div class="tag-create-row">
-            <label><span>New tag</span><input id="new-tag-name" placeholder="e.g. Greek" /></label>
-            <button type="button" id="create-meal-tag" class="button ghost">+ Create tag</button>
-          </div>
-        </fieldset>
-        <div class="meal-options">
-          <label class="option-card"><input id="meal-separate" type="checkbox" /><span><strong>Separate veggie & meat versions</strong><small>Assign each ingredient to both plates, the veggie plate or the meat plate.</small></span></label>
-          <label class="option-card"><input id="meal-premade" type="checkbox" /><span><strong>Buy this pre-made</strong><small>List packs and sides to buy. We won’t turn them into scratch ingredients.</small></span></label>
-        </div>
-        <fieldset id="ingredient-builder" class="ingredient-builder">
-          <legend id="ingredient-legend">Ingredients</legend>
-          <p id="ingredient-help" class="field-help">Add each ingredient and the amount you normally buy.</p>
-          <div id="ingredient-rows"></div>
-          <button type="button" id="add-ingredient-row" class="text-button">+ Add another ingredient</button>
-        </fieldset>
-        <label>Notes<textarea id="meal-notes" rows="3" placeholder="Swaps, sides, or anything worth remembering…"></textarea></label>
-        <fieldset>
-          <legend>Does a sensitive ingredient lead the flavour?</legend>
-          <div id="concern-checks" class="checks"></div>
-        </fieldset>
-        <div class="dialog-actions"><button type="button" id="delete-meal" class="button danger" hidden>Delete</button><span></span><button type="button" id="cancel-dialog" class="button ghost">Cancel</button><button type="submit" class="button primary">Save meal</button></div>
-      </form>
-    </dialog>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </body>
