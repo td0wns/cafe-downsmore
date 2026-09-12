@@ -44,6 +44,7 @@
           </div>
           <button id="clear-week" class="button ghost">Clear week</button>
         </div>
+        <div id="week-grid" class="week-grid"></div>
         <aside id="previous-week-panel" class="previous-week-panel" aria-labelledby="previous-week-title">
           <div class="history-head">
             <div>
@@ -64,7 +65,6 @@
           </div>
           <div id="previous-week-grid" class="previous-week-list"></div>
         </aside>
-        <div id="week-grid" class="week-grid"></div>
         <div class="week-summary">
           <div><span id="planned-count">0</span><small>meals planned</small></div>
           <div><span id="ingredient-count">0</span><small>unique ingredients</small></div>
@@ -106,10 +106,40 @@
         <aside class="palate-board">
           <div>
             <p class="eyebrow blue">Taste balance</p>
-            <h3>Palettes across this and the previous week</h3>
+            <h3>Flavours in the weeks you’re including</h3>
           </div>
           <div id="palate-snapshot" class="palate-snapshot"></div>
         </aside>
+        <section class="suggestion-source-panel" aria-labelledby="suggestion-source-title">
+          <div class="suggestion-source-head">
+            <div>
+              <h3 id="suggestion-source-title">Meals already on the table</h3>
+              <p>These meals stay out of the suggestions. Use the switches to decide which weeks shape the flavour balance.</p>
+            </div>
+            <div class="source-toggles" aria-label="Weeks used for taste balance">
+              <label class="source-toggle">
+                <input id="include-previous-week" type="checkbox" />
+                <span class="switch-track" aria-hidden="true"><span></span></span>
+                <span>Include last week</span>
+              </label>
+              <label class="source-toggle">
+                <input id="include-current-week" type="checkbox" />
+                <span class="switch-track" aria-hidden="true"><span></span></span>
+                <span>Include this week</span>
+              </label>
+            </div>
+          </div>
+          <div class="selected-week-meals">
+            <div id="previous-suggestion-source" class="week-source">
+              <div class="week-source-head"><strong>Last week</strong><span id="previous-source-status"></span></div>
+              <div id="previous-source-meals" class="source-meal-list"></div>
+            </div>
+            <div id="current-suggestion-source" class="week-source">
+              <div class="week-source-head"><strong>This week</strong><span id="current-source-status"></span></div>
+              <div id="current-source-meals" class="source-meal-list"></div>
+            </div>
+          </div>
+        </section>
         <h3 class="subhead">From your library</h3>
         <div id="unused-grid" class="idea-grid"></div>
         <h3 class="subhead">New dishes to consider</h3>

@@ -41,7 +41,7 @@ const NEW_IDEAS = [
   }
 ];
 
-let state = { meals: [], week: emptyWeek(), weekStart: "", previousWeek: null };
+let state = { meals: [], week: emptyWeek(), weekStart: "", previousWeek: null, suggestionSources: {previous:true, current:true} };
 let defaultMeals = [];
 let activeTag = "All";
 let comparisonId = null;
@@ -159,7 +159,11 @@ async function init() {
     meals: [],
     week: normaliseWeek(savedState.week),
     weekStart: savedState.weekStart || "",
-    previousWeek: savedState.previousWeek || null
+    previousWeek: savedState.previousWeek || null,
+    suggestionSources: {
+      previous:savedState.suggestionSources?.previous !== false,
+      current:savedState.suggestionSources?.current !== false
+    }
   };
   state.meals = defaultMeals.map(meal => {
     const savedMeal = savedMeals.get(meal.id);
@@ -209,6 +213,8 @@ function bindEvents() {
   });
   $("#copy-list").addEventListener("click", copyShoppingList);
   $("#refresh-ideas").addEventListener("click", () => { shuffleSeed += 1; renderIdeas(); });
+  $("#include-previous-week").addEventListener("change", event => updateSuggestionSource("previous", event.target.checked));
+  $("#include-current-week").addEventListener("change", event => updateSuggestionSource("current", event.target.checked));
   $("#add-last-week-meal").addEventListener("click", addLastWeekMeal);
   $("#last-week-meal-select").addEventListener("keydown", event => {
     if (event.key === "Enter") { event.preventDefault(); addLastWeekMeal(); }
@@ -376,34 +382,68 @@ function tasteTags(meal) {
 
 function paletteCounts() {
   const counts = new Map();
-  [...previousWeekMeals(), ...plannedMeals()].forEach(meal => tasteTags(meal).forEach(tag => counts.set(tag, (counts.get(tag) || 0) + 1)));
+  const meals = [
+    ...(state.suggestionSources.previous ? previousWeekMeals() : []),
+    ...(state.suggestionSources.current ? plannedMeals() : [])
+  ];
+  meals.forEach(meal => tasteTags(meal).forEach(tag => counts.set(tag, (counts.get(tag) || 0) + 1)));
   return counts;
 }
 
-function balanceScore(meal, counts, previousIds = new Set()) {
+function balanceScore(meal, counts) {
   const tags = tasteTags(meal);
   const repetition = tags.length ? Math.min(...tags.map(tag => counts.get(tag) || 0)) : 2;
-  return repetition * 10 + (previousIds.has(meal.id) ? 50 : 0) + (meal.timesCooked || 0) * 0.1 + (meal.lastCooked ? 0.5 : 0);
+  return repetition * 10 + (meal.timesCooked || 0) * 0.1 + (meal.lastCooked ? 0.5 : 0);
 }
 
-function balanceReason(meal, counts, previousIds = new Set()) {
+function balanceReason(meal, counts) {
   const tags = tasteTags(meal);
-  if (previousIds.has(meal.id)) return "You had this in the previous week, so fresher options rank ahead of it";
   const freshTag = tags.find(tag => !counts.has(tag));
-  if (freshTag) return `Adds ${freshTag} flavours across the two-week view`;
+  if (freshTag) return `Adds ${freshTag} flavours beyond the weeks you’re including`;
   if (!counts.size) return tags.length ? `Start the week with ${tags[0]} flavours` : "A flexible starting point";
-  return tags.length ? `${tags[0]} is one of the least-used palettes across both weeks` : "Keeps the two weeks varied";
+  return tags.length ? `${tags[0]} is one of the least-used palettes in the selected weeks` : "Keeps the selected weeks varied";
+}
+
+function updateSuggestionSource(source, included) {
+  state.suggestionSources[source] = included;
+  save();
+  renderIdeas();
+}
+
+function renderSuggestionSources() {
+  const previousIncluded = state.suggestionSources.previous;
+  const currentIncluded = state.suggestionSources.current;
+  $("#include-previous-week").checked = previousIncluded;
+  $("#include-current-week").checked = currentIncluded;
+  $("#previous-suggestion-source").classList.toggle("inactive", !previousIncluded);
+  $("#current-suggestion-source").classList.toggle("inactive", !currentIncluded);
+  $("#previous-source-status").textContent = previousIncluded ? "Included in balance" : "Not used for balance";
+  $("#current-source-status").textContent = currentIncluded ? "Included in balance" : "Not used for balance";
+
+  const previousGroups = new Map();
+  previousWeekMeals().forEach(meal => {
+    if (!previousGroups.has(meal.id)) previousGroups.set(meal.id, {meal, count:0});
+    previousGroups.get(meal.id).count += 1;
+  });
+  $("#previous-source-meals").innerHTML = previousGroups.size ? [...previousGroups.values()].map(({meal, count}) => `<span class="source-meal-chip">${escapeHtml(meal.name)}${count > 1 ? ` <b>×${count}</b>` : ""}</span>`).join("") : `<span class="source-empty">No meals recorded</span>`;
+
+  const currentMeals = DAYS.map(day => ({day, meal:state.meals.find(meal => meal.id === state.week[day])})).filter(item => item.meal);
+  $("#current-source-meals").innerHTML = currentMeals.length ? currentMeals.map(({day, meal}) => `<span class="source-meal-chip"><b>${day.slice(0, 3)}</b> ${escapeHtml(meal.name)}</span>`).join("") : `<span class="source-empty">No meals planned</span>`;
 }
 
 function renderIdeas() {
+  renderSuggestionSources();
   const counts = paletteCounts();
-  $("#palate-snapshot").innerHTML = counts.size ? [...counts.entries()].sort((a,b) => b[1] - a[1]).map(([tag,count]) => `<span class="palette-chip"><strong>${escapeHtml(tag)}</strong> ${count}×</span>`).join("") : `<span class="palette-empty">No meals in either retained week — your first choice sets the baseline.</span>`;
-  const plannedIds = new Set(Object.values(state.week));
+  const anySourceIncluded = state.suggestionSources.previous || state.suggestionSources.current;
+  $("#palate-snapshot").innerHTML = counts.size ? [...counts.entries()].sort((a,b) => b[1] - a[1]).map(([tag,count]) => `<span class="palette-chip"><strong>${escapeHtml(tag)}</strong> ${count}×</span>`).join("") : `<span class="palette-empty">${anySourceIncluded ? "No meals in the included weeks yet." : "Both week switches are off — suggestions start from a clean slate."}</span>`;
+  const plannedIds = new Set(Object.values(state.week).filter(Boolean));
   const previousIds = new Set(previousMealIds());
-  const candidates = state.meals.filter(meal => !plannedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts, previousIds) - balanceScore(b, counts, previousIds) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3);
-  $("#unused-grid").innerHTML = candidates.length ? candidates.map(meal => ideaCard(meal, balanceReason(meal, counts, previousIds), false)).join("") : `<div class="empty">Every library meal is already in this week.</div>`;
-  const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id)).sort((a,b) => balanceScore(a, counts, previousIds) - balanceScore(b, counts, previousIds) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3);
-  $("#new-grid").innerHTML = freshIdeas.length ? freshIdeas.map(meal => ideaCard(meal, balanceReason(meal, counts, previousIds), true)).join("") : `<div class="empty">You have saved all current suggestions to your library.</div>`;
+  const excludedIds = new Set([...plannedIds, ...previousIds]);
+  if (excludedIds.has(comparisonId)) comparisonId = null;
+  const candidates = state.meals.filter(meal => !excludedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3);
+  $("#unused-grid").innerHTML = candidates.length ? candidates.map(meal => ideaCard(meal, balanceReason(meal, counts), false)).join("") : `<div class="empty">Every library meal is already in last week or this week.</div>`;
+  const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id) && !excludedIds.has(idea.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3);
+  $("#new-grid").innerHTML = freshIdeas.length ? freshIdeas.map(meal => ideaCard(meal, balanceReason(meal, counts), true)).join("") : `<div class="empty">You have saved or already selected all current suggestions.</div>`;
   $$('[data-compare]').forEach(button => button.addEventListener("click", () => { comparisonId = button.dataset.compare; renderComparison(); $("#comparison-panel").scrollIntoView({behavior:"smooth", block:"start"}); }));
   renderComparison();
 }

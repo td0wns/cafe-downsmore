@@ -9,6 +9,7 @@ A small, static meal library and weekly planner for two. It encodes the househol
 - Lets you record up to 10 meals from last week, and automatically fills that list from the current plan when the week rolls over. A newer completed week replaces it; otherwise it expires after two weeks.
 - Displays the ingredients pulled from every planned meal.
 - Uses cuisine and flavour tags to avoid an overloaded weekly palate.
+- Shows last week and this week together on Suggestions, removes already selected meals from the recommendation cards, and lets either week be switched in or out of flavour balancing.
 - Previews recommendations against the current grocery list and highlights new additions.
 - Surfaces meals that have never been logged or have not been cooked recently.
 - Uses a consistent tag catalogue maintained with the meal data.
