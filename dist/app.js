@@ -1,6 +1,7 @@
 const STORE_KEY = "our-table-v1";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const MAX_LAST_WEEK_MEALS = 10;
+const MAX_PICKER_RESULTS = 60;
 const NON_PALETTE_TAGS = new Set(["suggestions", "our meals", "pre-made", "budget friendly", "simple to make", "quick", "easy", "one tray", "spring", "summer", "autumn", "winter"]);
 const NEW_IDEAS = [
   {
@@ -46,6 +47,8 @@ let defaultMeals = [];
 let activeTag = "All";
 let comparisonId = null;
 let shuffleSeed = 0;
+let pickerTarget = null;
+let pickerReturnFocus = null;
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
@@ -216,14 +219,19 @@ function bindEvents() {
   $("#include-previous-week").addEventListener("change", event => updateSuggestionSource("previous", event.target.checked));
   $("#include-current-week").addEventListener("change", event => updateSuggestionSource("current", event.target.checked));
   $("#add-last-week-meal").addEventListener("click", addLastWeekMeal);
-  $("#last-week-meal-select").addEventListener("keydown", event => {
-    if (event.key === "Enter") { event.preventDefault(); addLastWeekMeal(); }
-  });
   $("#clear-last-week").addEventListener("click", () => {
     if (!previousMealIds().length) return;
     state.previousWeek = null;
     save(); renderAll(); showToast("Last week cleared");
   });
+  $("#meal-picker-search").addEventListener("input", renderMealPickerResults);
+  $("#close-meal-picker").addEventListener("click", closeMealPicker);
+  $("#meal-picker").addEventListener("click", event => { if (event.target.id === "meal-picker") closeMealPicker(); });
+  $("#meal-picker-results").addEventListener("click", event => {
+    const button = event.target.closest("[data-pick-meal]");
+    if (button) chooseMeal(button.dataset.pickMeal);
+  });
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !$("#meal-picker").hidden) closeMealPicker(); });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden && syncRollingWeeks()) { save(); renderAll(); }
   });
@@ -283,18 +291,15 @@ function aggregateIngredients(meals) {
 }
 
 function renderWeek() {
-  const options = state.meals.slice().sort((a,b) => a.name.localeCompare(b.name)).map(meal => `<option value="${escapeHtml(meal.id)}">${escapeHtml(meal.name)}</option>`).join("");
   $("#current-week-range").textContent = formatWeekRange(state.weekStart);
   renderPreviousWeek();
-  $("#week-grid").innerHTML = weekDates().map(({name, date, today}) => `<article class="day-card ${today ? "today" : ""}"><span class="day-name">${name.slice(0,3)}</span><span class="day-date">${date.getDate()}</span><select aria-label="Meal for ${name}" data-day="${name}"><option value="">Choose a meal…</option>${options}</select>${state.week[name] ? `<button class="cooked-button" data-cooked="${name}">Mark as cooked</button>` : ""}</article>`).join("");
-  $$('[data-day]').forEach(select => {
-    select.value = state.week[select.dataset.day] || "";
-    select.addEventListener("change", event => {
-      state.week[event.target.dataset.day] = event.target.value;
-      save(); renderAll();
-    });
-  });
+  $("#week-grid").innerHTML = weekDates().map(({name, date, today}) => {
+    const meal = state.meals.find(item => item.id === state.week[name]);
+    return `<article class="day-card ${today ? "today" : ""}"><span class="day-name">${name.slice(0,3)}</span><span class="day-date">${date.getDate()}</span><button class="day-meal-picker ${meal ? "has-meal" : ""}" type="button" data-choose-day="${name}" aria-label="${meal ? `Change ${name} meal, currently ${escapeHtml(meal.name)}` : `Choose a meal for ${name}`}">${meal ? `<span>${escapeHtml(meal.name)}</span><small>Change or search</small>` : `<span>Choose a meal</span><small>Search the library</small>`}</button>${meal ? `<div class="day-actions"><button class="cooked-button" type="button" data-cooked="${name}">Mark as cooked</button><button class="clear-day-button" type="button" data-clear-day="${name}">Remove</button></div>` : ""}</article>`;
+  }).join("");
+  $$('[data-choose-day]').forEach(button => button.addEventListener("click", () => openMealPicker({type:"week", day:button.dataset.chooseDay}, button)));
   $$('[data-cooked]').forEach(button => button.addEventListener("click", () => markCooked(state.week[button.dataset.cooked])));
+  $$('[data-clear-day]').forEach(button => button.addEventListener("click", () => clearDay(button.dataset.clearDay)));
   const meals = plannedMeals();
   $("#planned-count").textContent = meals.length;
   $("#ingredient-count").textContent = aggregateIngredients(meals).size;
@@ -303,11 +308,8 @@ function renderWeek() {
 
 function renderPreviousWeek() {
   const ids = previousMealIds();
-  const select = $("#last-week-meal-select");
   $("#previous-week-range").textContent = formatWeekRange(state.previousWeek?.weekStart || lastWeekStartKey());
   $("#last-week-count").textContent = `${ids.length} / ${MAX_LAST_WEEK_MEALS} meals`;
-  select.innerHTML = `<option value="">Choose from the library…</option>${state.meals.slice().sort((a,b) => a.name.localeCompare(b.name)).map(meal => `<option value="${escapeHtml(meal.id)}">${escapeHtml(meal.name)}</option>`).join("")}`;
-  select.disabled = ids.length >= MAX_LAST_WEEK_MEALS;
   $("#add-last-week-meal").disabled = ids.length >= MAX_LAST_WEEK_MEALS;
   $("#clear-last-week").disabled = !ids.length;
   $("#previous-week-grid").innerHTML = ids.length ? ids.map((id, index) => {
@@ -318,16 +320,8 @@ function renderPreviousWeek() {
 }
 
 function addLastWeekMeal() {
-  const select = $("#last-week-meal-select");
-  const mealId = select.value;
-  const ids = previousMealIds();
-  if (!mealId) return showToast("Choose a meal first");
-  if (ids.length >= MAX_LAST_WEEK_MEALS) return showToast("Last week is limited to 10 meals");
-  state.previousWeek = {
-    weekStart:state.previousWeek?.weekStart || lastWeekStartKey(),
-    mealIds:[...ids, mealId]
-  };
-  save(); renderAll(); showToast("Added to last week");
+  if (previousMealIds().length >= MAX_LAST_WEEK_MEALS) return showToast("Last week is limited to 10 meals");
+  openMealPicker({type:"previous"}, $("#add-last-week-meal"));
 }
 
 function removeLastWeekMeal(index) {
@@ -336,6 +330,55 @@ function removeLastWeekMeal(index) {
   const removedMeal = state.meals.find(meal => meal.id === removedId);
   state.previousWeek = ids.length ? {weekStart:state.previousWeek.weekStart, mealIds:ids} : null;
   save(); renderAll(); showToast(removedMeal ? `${removedMeal.name} removed` : "Meal removed");
+}
+
+function openMealPicker(target, opener = document.activeElement) {
+  pickerTarget = target;
+  pickerReturnFocus = opener;
+  $("#meal-picker-title").textContent = target.type === "previous" ? "Add a meal to last week" : `Choose a meal for ${target.day}`;
+  $("#meal-picker-search").value = "";
+  $("#meal-picker").hidden = false;
+  document.body.classList.add("modal-open");
+  renderMealPickerResults();
+  requestAnimationFrame(() => $("#meal-picker-search").focus());
+}
+
+function closeMealPicker(restoreFocus = true) {
+  $("#meal-picker").hidden = true;
+  document.body.classList.remove("modal-open");
+  pickerTarget = null;
+  if (restoreFocus && pickerReturnFocus?.isConnected) pickerReturnFocus.focus();
+  pickerReturnFocus = null;
+}
+
+function renderMealPickerResults() {
+  const query = $("#meal-picker-search").value.trim().toLowerCase();
+  const matches = state.meals.filter(meal => [meal.name, meal.category, meal.notes, ...(meal.tags || []), ...meal.ingredients.map(item => item.name)].join(" ").toLowerCase().includes(query)).sort((a,b) => a.name.localeCompare(b.name));
+  const visible = matches.slice(0, MAX_PICKER_RESULTS);
+  $("#meal-picker-summary").textContent = matches.length > MAX_PICKER_RESULTS ? `Showing the first ${MAX_PICKER_RESULTS} of ${matches.length} meals — keep typing to narrow the list.` : `${matches.length} ${matches.length === 1 ? "meal" : "meals"}`;
+  $("#meal-picker-results").innerHTML = visible.length ? visible.map(meal => `<button class="meal-picker-result" type="button" data-pick-meal="${escapeHtml(meal.id)}"><strong>${escapeHtml(meal.name)}</strong><span>${escapeHtml([...(meal.tags || []).slice(0,3), meal.minutes ? `${meal.minutes} min` : ""].filter(Boolean).join(" · "))}</span></button>`).join("") : `<div class="meal-picker-empty">No meals match “${escapeHtml($("#meal-picker-search").value.trim())}”.</div>`;
+}
+
+function chooseMeal(mealId) {
+  const meal = state.meals.find(item => item.id === mealId);
+  const target = pickerTarget;
+  if (!meal || !target) return;
+  closeMealPicker(false);
+  if (target.type === "previous") {
+    const ids = previousMealIds();
+    if (ids.length >= MAX_LAST_WEEK_MEALS) return showToast("Last week is limited to 10 meals");
+    state.previousWeek = {weekStart:state.previousWeek?.weekStart || lastWeekStartKey(), mealIds:[...ids, mealId]};
+    save(); renderAll(); showToast(`${meal.name} added to last week`);
+    return;
+  }
+  state.week[target.day] = mealId;
+  save(); renderAll(); showToast(`${target.day} set to ${meal.name}`);
+}
+
+function clearDay(day) {
+  const meal = state.meals.find(item => item.id === state.week[day]);
+  state.week[day] = "";
+  save(); renderAll(); showToast(meal ? `${meal.name} removed from ${day}` : `${day} cleared`);
 }
 
 function renderGroceryList(meals) {
@@ -440,9 +483,9 @@ function renderIdeas() {
   const previousIds = new Set(previousMealIds());
   const excludedIds = new Set([...plannedIds, ...previousIds]);
   if (excludedIds.has(comparisonId)) comparisonId = null;
-  const candidates = state.meals.filter(meal => !excludedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3);
+  const candidates = state.meals.filter(meal => !excludedIds.has(meal.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || (a.lastCooked || "").localeCompare(b.lastCooked || "") || a.name.localeCompare(b.name)).slice(0,3).sort((a,b) => a.name.localeCompare(b.name));
   $("#unused-grid").innerHTML = candidates.length ? candidates.map(meal => ideaCard(meal, balanceReason(meal, counts), false)).join("") : `<div class="empty">Every library meal is already in last week or this week.</div>`;
-  const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id) && !excludedIds.has(idea.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3);
+  const freshIdeas = NEW_IDEAS.filter(idea => !state.meals.some(meal => meal.id === idea.id) && !excludedIds.has(idea.id)).sort((a,b) => balanceScore(a, counts) - balanceScore(b, counts) || seededOrder(a.id) - seededOrder(b.id)).slice(0,3).sort((a,b) => a.name.localeCompare(b.name));
   $("#new-grid").innerHTML = freshIdeas.length ? freshIdeas.map(meal => ideaCard(meal, balanceReason(meal, counts), true)).join("") : `<div class="empty">You have saved or already selected all current suggestions.</div>`;
   $$('[data-compare]').forEach(button => button.addEventListener("click", () => { comparisonId = button.dataset.compare; renderComparison(); $("#comparison-panel").scrollIntoView({behavior:"smooth", block:"start"}); }));
   renderComparison();

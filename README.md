@@ -10,6 +10,7 @@ A small, static meal library and weekly planner for two. It encodes the househol
 - Displays the ingredients pulled from every planned meal.
 - Uses cuisine and flavour tags to avoid an overloaded weekly palate.
 - Shows last week and this week together on Suggestions, removes already selected meals from the recommendation cards, and lets either week be switched in or out of flavour balancing.
+- Refills suggestion rows as meals are planned, displays the chosen set alphabetically, and provides a searchable meal picker for every calendar day and the previous-week list.
 - Previews recommendations against the current grocery list and highlights new additions.
 - Surfaces meals that have never been logged or have not been cooked recently.
 - Uses a consistent tag catalogue maintained with the meal data.
