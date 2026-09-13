@@ -1,0 +1,20 @@
+{
+  "id": "diy-pizza",
+  "name": "DIY pizza",
+  "category": "Weeknight",
+  "tags": ["Our meals", "Italian", "Comfort"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "pizza-bases", "amount": "2" },
+    { "ingredient": "pizza-sauce", "amount": "2 small cans", "dominant": false },
+    { "ingredient": "mozzarella", "amount": "1 ball" },
+    { "ingredient": "cheddar", "amount": "100g" },
+    { "ingredient": "red-peppers", "amount": "2" },
+    { "ingredient": "canned-pineapple", "amount": "1 small can" },
+    { "ingredient": "sweetcorn", "amount": "1 small can" },
+    { "ingredient": "chorizo", "amount": "1 pack", "scope": "meat", "optional": true }
+  ],
+  "notes": "Build both pizzas with cheese, peppers, pineapple and sweetcorn. Add optional chorizo only to the separately prepared meat version.",
+  "preMade": false,
+  "separateVersions": true
+}

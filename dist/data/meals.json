@@ -138,6 +138,68 @@
     "timesCooked": 0
   },
   {
+    "id": "diy-pizza",
+    "name": "DIY pizza",
+    "category": "Weeknight",
+    "tags": [
+      "Our meals",
+      "Italian",
+      "Comfort"
+    ],
+    "minutes": 30,
+    "ingredients": [
+      {
+        "ingredientId": "pizza-bases",
+        "name": "pizza bases",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "pizza-sauce",
+        "name": "pizza sauce",
+        "amount": "2 small cans",
+        "concern": "tomato",
+        "dominant": false
+      },
+      {
+        "ingredientId": "mozzarella",
+        "name": "mozzarella",
+        "amount": "1 ball"
+      },
+      {
+        "ingredientId": "cheddar",
+        "name": "cheddar",
+        "amount": "100g"
+      },
+      {
+        "ingredientId": "red-peppers",
+        "name": "red peppers",
+        "amount": "2"
+      },
+      {
+        "ingredientId": "canned-pineapple",
+        "name": "canned pineapple",
+        "amount": "1 small can"
+      },
+      {
+        "ingredientId": "sweetcorn",
+        "name": "sweetcorn",
+        "amount": "1 small can"
+      },
+      {
+        "ingredientId": "chorizo",
+        "name": "chorizo",
+        "amount": "1 pack",
+        "scope": "meat",
+        "optional": true
+      }
+    ],
+    "notes": "Build both pizzas with cheese, peppers, pineapple and sweetcorn. Add optional chorizo only to the separately prepared meat version.",
+    "preMade": false,
+    "separateVersions": true,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
     "id": "halloumi-wraps",
     "name": "Halloumi & roasted pepper wraps",
     "category": "Quick",
@@ -324,6 +386,35 @@
     "timesCooked": 0
   },
   {
+    "id": "pizza-and-salad",
+    "name": "Pizza & salad",
+    "category": "Easy meal",
+    "tags": [
+      "Our meals",
+      "Pre-made",
+      "Easy",
+      "Italian"
+    ],
+    "minutes": 20,
+    "ingredients": [
+      {
+        "ingredientId": "store-bought-vegetarian-pizza",
+        "name": "store-bought vegetarian pizza",
+        "amount": "2 pizzas"
+      },
+      {
+        "ingredientId": "bagged-salad",
+        "name": "bagged salad",
+        "amount": "1 bag"
+      }
+    ],
+    "notes": "An easy dinner: bake the store-bought pizzas and serve with the bagged salad.",
+    "preMade": true,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
     "id": "spinach-ricotta-bake",
     "name": "Spinach & ricotta pasta bake",
     "category": "Comfort",
@@ -366,6 +457,80 @@
       }
     ],
     "notes": "A white-sauce bake rather than a tomato-led one.",
+    "preMade": false,
+    "separateVersions": false,
+    "lastCooked": null,
+    "timesCooked": 0
+  },
+  {
+    "id": "teriyaki-tofu",
+    "name": "Teriyaki tofu",
+    "category": "Weeknight",
+    "tags": [
+      "Our meals",
+      "Asian",
+      "Japanese-inspired",
+      "Simple to make"
+    ],
+    "minutes": 30,
+    "ingredients": [
+      {
+        "ingredientId": "firm-tofu",
+        "name": "firm tofu",
+        "amount": "400g"
+      },
+      {
+        "ingredientId": "soy-sauce",
+        "name": "soy sauce",
+        "amount": "5 tbsp"
+      },
+      {
+        "ingredientId": "cornflour",
+        "name": "cornflour",
+        "amount": "4 tsp"
+      },
+      {
+        "ingredientId": "high-heat-cooking-oil",
+        "name": "high-heat cooking oil",
+        "amount": "2 tbsp"
+      },
+      {
+        "ingredientId": "brown-sugar",
+        "name": "brown sugar",
+        "amount": "1/4 cup"
+      },
+      {
+        "ingredientId": "rice-vinegar",
+        "name": "rice vinegar",
+        "amount": "1 tbsp",
+        "concern": "vinegar",
+        "dominant": false
+      },
+      {
+        "ingredientId": "ginger",
+        "name": "ginger",
+        "amount": "2 tsp grated"
+      },
+      {
+        "ingredientId": "garlic",
+        "name": "garlic",
+        "amount": "3 cloves",
+        "concern": "garlic",
+        "dominant": false
+      },
+      {
+        "ingredientId": "basmati-rice",
+        "name": "basmati rice",
+        "amount": "150g"
+      },
+      {
+        "ingredientId": "broccolini",
+        "name": "broccolini",
+        "amount": "200g"
+      }
+    ],
+    "notes": "Press and crisp the tofu, coat it in the homemade teriyaki sauce, and serve with basmati rice and broccolini. Garlic and rice vinegar stay within the sauce rather than leading the dish.",
+    "recipeUrl": "https://www.noracooks.com/teriyaki-tofu/",
     "preMade": false,
     "separateVersions": false,
     "lastCooked": null,
@@ -465,4 +630,3 @@
     "timesCooked": 0
   }
 ]
-

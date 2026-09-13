@@ -1,0 +1,23 @@
+{
+  "id": "teriyaki-tofu",
+  "name": "Teriyaki tofu",
+  "category": "Weeknight",
+  "tags": ["Our meals", "Asian", "Japanese-inspired", "Simple to make"],
+  "minutes": 30,
+  "ingredients": [
+    { "ingredient": "firm-tofu", "amount": "400g" },
+    { "ingredient": "soy-sauce", "amount": "5 tbsp" },
+    { "ingredient": "cornflour", "amount": "4 tsp" },
+    { "ingredient": "high-heat-cooking-oil", "amount": "2 tbsp" },
+    { "ingredient": "brown-sugar", "amount": "1/4 cup" },
+    { "ingredient": "rice-vinegar", "amount": "1 tbsp", "dominant": false },
+    { "ingredient": "ginger", "amount": "2 tsp grated" },
+    { "ingredient": "garlic", "amount": "3 cloves", "dominant": false },
+    { "ingredient": "basmati-rice", "amount": "150g" },
+    { "ingredient": "broccolini", "amount": "200g" }
+  ],
+  "notes": "Press and crisp the tofu, coat it in the homemade teriyaki sauce, and serve with basmati rice and broccolini. Garlic and rice vinegar stay within the sauce rather than leading the dish.",
+  "recipeUrl": "https://www.noracooks.com/teriyaki-tofu/",
+  "preMade": false,
+  "separateVersions": false
+}

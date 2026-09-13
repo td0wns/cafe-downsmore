@@ -23,8 +23,16 @@
     "name": "basmati rice",
     "vegetarian": true
   },
+  "bagged-salad": {
+    "name": "bagged salad",
+    "vegetarian": true
+  },
   "broccoli": {
     "name": "broccoli",
+    "vegetarian": true
+  },
+  "broccolini": {
+    "name": "broccolini",
     "vegetarian": true
   },
   "burger-buns": {
@@ -39,12 +47,28 @@
     "name": "butternut squash",
     "vegetarian": true
   },
+  "brown-sugar": {
+    "name": "brown sugar",
+    "vegetarian": true
+  },
+  "canned-pineapple": {
+    "name": "canned pineapple",
+    "vegetarian": true
+  },
   "carrots": {
     "name": "carrots",
     "vegetarian": true
   },
   "cheddar": {
     "name": "cheddar",
+    "vegetarian": true
+  },
+  "chorizo": {
+    "name": "chorizo",
+    "vegetarian": false
+  },
+  "cornflour": {
+    "name": "cornflour",
     "vegetarian": true
   },
   "coriander": {
@@ -92,6 +116,11 @@
     "name": "ginger",
     "vegetarian": true
   },
+  "garlic": {
+    "name": "garlic",
+    "vegetarian": true,
+    "concern": "garlic"
+  },
   "ground-cumin": {
     "name": "ground cumin",
     "vegetarian": true
@@ -103,6 +132,10 @@
   },
   "halloumi": {
     "name": "halloumi",
+    "vegetarian": true
+  },
+  "high-heat-cooking-oil": {
+    "name": "high-heat cooking oil",
     "vegetarian": true
   },
   "ketchup": {
@@ -164,6 +197,15 @@
     "name": "paneer",
     "vegetarian": true
   },
+  "pizza-bases": {
+    "name": "pizza bases",
+    "vegetarian": true
+  },
+  "pizza-sauce": {
+    "name": "pizza sauce",
+    "vegetarian": true,
+    "concern": "tomato"
+  },
   "parmesan-style-vegetarian-cheese": {
     "name": "Parmesan-style vegetarian cheese",
     "vegetarian": true
@@ -191,6 +233,11 @@
   "rice": {
     "name": "rice",
     "vegetarian": true
+  },
+  "rice-vinegar": {
+    "name": "rice vinegar",
+    "vegetarian": true,
+    "concern": "vinegar"
   },
   "salt": {
     "name": "salt",
@@ -230,6 +277,10 @@
   },
   "black-pepper": {
     "name": "black pepper",
+    "vegetarian": true
+  },
+  "store-bought-vegetarian-pizza": {
+    "name": "store-bought vegetarian pizza",
     "vegetarian": true
   },
   "spring-onion-greens": {
