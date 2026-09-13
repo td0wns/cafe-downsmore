@@ -187,6 +187,13 @@ function bindEvents() {
   $("#refresh-ideas").addEventListener("click", () => { shuffleSeed += 1; renderIdeas(); });
   $("#include-previous-week").addEventListener("change", event => updateSuggestionSource("previous", event.target.checked));
   $("#include-current-week").addEventListener("change", event => updateSuggestionSource("current", event.target.checked));
+  ["previous", "current"].forEach(source => {
+    $(`#${source}-source-search`).addEventListener("input", () => renderSuggestionSourceSearch(source));
+    $(`#${source}-source-results`).addEventListener("click", event => {
+      const button = event.target.closest("[data-add-source-meal]");
+      if (button) addSuggestionSourceMeal(source, button.dataset.addSourceMeal);
+    });
+  });
   $("#add-last-week-meal").addEventListener("click", addLastWeekMeal);
   $("#clear-last-week").addEventListener("click", () => {
     if (!previousMealIds().length) return;
@@ -218,25 +225,6 @@ function renderAll() {
   renderIdeas();
 }
 
-function weekDates(startKey = state.weekStart) {
-  const today = new Date();
-  const monday = parseDateKey(startKey) || weekStartDate(today);
-  return DAYS.map((name, index) => {
-    const date = new Date(monday);
-    date.setDate(monday.getDate() + index);
-    return { name, date, today: date.toDateString() === today.toDateString() };
-  });
-}
-
-function formatWeekRange(startKey) {
-  const dates = weekDates(startKey);
-  const first = dates[0].date;
-  const last = dates[6].date;
-  const firstText = first.toLocaleDateString("en-GB", {day:"numeric", month:first.getMonth() === last.getMonth() ? undefined : "short"});
-  const lastText = last.toLocaleDateString("en-GB", {day:"numeric", month:"short", year:first.getFullYear() === last.getFullYear() ? undefined : "numeric"});
-  return `${firstText}–${lastText}${first.getFullYear() === last.getFullYear() ? ` ${last.getFullYear()}` : ""}`;
-}
-
 function plannedMeals(week = state.week) {
   return Object.values(week || {}).filter(Boolean).map(id => state.meals.find(meal => meal.id === id)).filter(Boolean);
 }
@@ -260,11 +248,10 @@ function aggregateIngredients(meals) {
 }
 
 function renderWeek() {
-  $("#current-week-range").textContent = formatWeekRange(state.weekStart);
   renderPreviousWeek();
-  $("#week-grid").innerHTML = weekDates().map(({name, date, today}) => {
+  $("#week-grid").innerHTML = DAYS.map(name => {
     const meal = state.meals.find(item => item.id === state.week[name]);
-    return `<article class="day-card ${today ? "today" : ""}"><span class="day-name">${name.slice(0,3)}</span><span class="day-date">${date.getDate()}</span><button class="day-meal-picker ${meal ? "has-meal" : ""}" type="button" data-choose-day="${name}" aria-label="${meal ? `Change ${name} meal, currently ${escapeHtml(meal.name)}` : `Choose a meal for ${name}`}">${meal ? `<span>${escapeHtml(meal.name)}</span><small>Change or search</small>` : `<span>Choose a meal</span><small>Search the library</small>`}</button>${meal ? `<div class="day-actions"><button class="cooked-button" type="button" data-cooked="${name}">Mark as cooked</button><button class="clear-day-button" type="button" data-clear-day="${name}">Remove</button></div>` : ""}</article>`;
+    return `<article class="day-card"><span class="day-name">${name}</span><button class="day-meal-picker ${meal ? "has-meal" : ""}" type="button" data-choose-day="${name}" aria-label="${meal ? `Change ${name} meal, currently ${escapeHtml(meal.name)}` : `Choose a meal for ${name}`}">${meal ? `<span>${escapeHtml(meal.name)}</span><small>Change or search</small>` : `<span>Choose a meal</span><small>Search the library</small>`}</button>${meal ? `<div class="day-actions"><button class="cooked-button" type="button" data-cooked="${name}">Mark as cooked</button><button class="clear-day-button" type="button" data-clear-day="${name}">Remove</button></div>` : ""}</article>`;
   }).join("");
   $$('[data-choose-day]').forEach(button => button.addEventListener("click", () => openMealPicker({type:"week", day:button.dataset.chooseDay}, button)));
   $$('[data-cooked]').forEach(button => button.addEventListener("click", () => markCooked(state.week[button.dataset.cooked])));
@@ -277,7 +264,6 @@ function renderWeek() {
 
 function renderPreviousWeek() {
   const ids = previousMealIds();
-  $("#previous-week-range").textContent = formatWeekRange(state.previousWeek?.weekStart || lastWeekStartKey());
   $("#last-week-count").textContent = `${ids.length} / ${MAX_LAST_WEEK_MEALS} meals`;
   $("#add-last-week-meal").disabled = ids.length >= MAX_LAST_WEEK_MEALS;
   $("#clear-last-week").disabled = !ids.length;
@@ -423,6 +409,35 @@ function updateSuggestionSource(source, included) {
   renderIdeas();
 }
 
+function renderSuggestionSourceSearch(source) {
+  const input = $(`#${source}-source-search`);
+  const results = $(`#${source}-source-results`);
+  const query = input.value.trim().toLowerCase();
+  if (!query) {
+    results.innerHTML = "";
+    return;
+  }
+  const unavailable = source === "previous" ? new Set(previousMealIds()) : new Set(Object.values(state.week).filter(Boolean));
+  const matches = state.meals.filter(meal => !unavailable.has(meal.id) && [meal.name, meal.category, meal.notes, ...(meal.tags || []), ...meal.ingredients.map(item => item.name)].join(" ").toLowerCase().includes(query)).sort((a,b) => a.name.localeCompare(b.name)).slice(0, 6);
+  results.innerHTML = matches.length ? matches.map(meal => `<button type="button" data-add-source-meal="${escapeHtml(meal.id)}"><strong>${escapeHtml(meal.name)}</strong><span>${escapeHtml(meal.category || "Meal")}</span></button>`).join("") : `<p>No matching meals</p>`;
+}
+
+function addSuggestionSourceMeal(source, mealId) {
+  const meal = state.meals.find(item => item.id === mealId);
+  if (!meal) return;
+  if (source === "previous") {
+    const ids = previousMealIds();
+    if (ids.length >= MAX_LAST_WEEK_MEALS) return showToast("Last week is limited to 10 meals");
+    state.previousWeek = {weekStart:state.previousWeek?.weekStart || lastWeekStartKey(), mealIds:[...ids, mealId]};
+  } else {
+    const day = DAYS.find(name => !state.week[name]);
+    if (!day) return showToast("This week already has seven meals");
+    state.week[day] = mealId;
+  }
+  $(`#${source}-source-search`).value = "";
+  save(); renderAll(); showToast(`${meal.name} added to ${source === "previous" ? "last week" : "this week"}`);
+}
+
 function renderSuggestionSources() {
   const previousIncluded = state.suggestionSources.previous;
   const currentIncluded = state.suggestionSources.current;
@@ -566,3 +581,4 @@ function registerMealPlannerTools() {
 }
 
 init().catch(() => { document.body.innerHTML = '<main class="empty">The meal data could not be loaded. Please refresh the page.</main>'; });
+

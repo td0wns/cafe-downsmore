@@ -40,7 +40,6 @@
           <div>
             <p class="eyebrow blue">Weekly plan</p>
             <h2 id="week-title">What are we eating?</h2>
-            <p id="current-week-range" class="week-range"></p>
           </div>
           <button id="clear-week" class="button ghost">Clear week</button>
         </div>
@@ -50,7 +49,6 @@
             <div>
               <p class="eyebrow blue">Previous week</p>
               <h3 id="previous-week-title">Last week’s meals</h3>
-              <p id="previous-week-range" class="week-range"></p>
             </div>
             <div class="history-summary">
               <strong id="last-week-count">0 / 10 meals</strong>
@@ -134,10 +132,20 @@
           <div class="selected-week-meals">
             <div id="previous-suggestion-source" class="week-source">
               <div class="week-source-head"><strong>Last week</strong><span id="previous-source-status"></span></div>
+              <label class="source-search" for="previous-source-search">
+                <span>Add a meal to last week</span>
+                <input id="previous-source-search" type="search" placeholder="Search meals…" autocomplete="off" />
+              </label>
+              <div id="previous-source-results" class="source-search-results"></div>
               <div id="previous-source-meals" class="source-meal-list"></div>
             </div>
             <div id="current-suggestion-source" class="week-source">
               <div class="week-source-head"><strong>This week</strong><span id="current-source-status"></span></div>
+              <label class="source-search" for="current-source-search">
+                <span>Add a meal to this week</span>
+                <input id="current-source-search" type="search" placeholder="Search meals…" autocomplete="off" />
+              </label>
+              <div id="current-source-results" class="source-search-results"></div>
               <div id="current-source-meals" class="source-meal-list"></div>
             </div>
           </div>
@@ -172,3 +180,4 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
+
