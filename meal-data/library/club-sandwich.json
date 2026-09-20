@@ -1,0 +1,23 @@
+{
+  "id": "club-sandwich",
+  "name": "Club Sandwich",
+  "category": "Quick",
+  "tags": ["Our meals", "American", "Quick"],
+  "minutes": 20,
+  "ingredients": [
+    { "ingredient": "tiger-bloomer-bread", "amount": "8 slices" },
+    { "ingredient": "mayonnaise", "amount": "4 tbsp", "dominant": false },
+    { "ingredient": "avocado", "amount": "1" },
+    { "ingredient": "tomato", "amount": "1", "dominant": false },
+    { "ingredient": "lettuce", "amount": "1 small" },
+    { "ingredient": "cucumber", "amount": "1/2" },
+    { "ingredient": "red-onion", "amount": "1/4", "dominant": false },
+    { "ingredient": "swiss-cheese", "amount": "4 slices" },
+    { "ingredient": "bacon", "amount": "4 rashers", "scope": "meat" },
+    { "ingredient": "vegetarian-bacon", "amount": "4 rashers", "scope": "vegetarian" }
+  ],
+  "notes": "Make matching club sandwiches, using bacon for the meat version and vegetarian bacon for the vegetarian version. Keep mayonnaise, tomato and red onion in the background.",
+  "preMade": false,
+  "separateVersions": true
+}
+

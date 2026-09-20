@@ -1,0 +1,18 @@
+{
+  "id": "wai-wai-something-to-do-with-i-had-it-for-lunch-in-india",
+  "name": "Wai Wai Something to do with I had it for Lunch in India",
+  "category": "Quick",
+  "tags": ["Our meals", "Asian", "Quick"],
+  "minutes": 15,
+  "ingredients": [
+    { "ingredient": "wai-wai-noodles", "amount": "2 packs" },
+    { "ingredient": "frozen-peas", "amount": "150g" },
+    { "ingredient": "carrots", "amount": "2" },
+    { "ingredient": "spring-onions", "amount": "2", "dominant": false },
+    { "ingredient": "soy-sauce", "amount": "2 tbsp" }
+  ],
+  "notes": "Prepare the Wai Wai noodles with peas and carrots, then finish with soy sauce and a light amount of spring onion.",
+  "preMade": false,
+  "separateVersions": false
+}
+

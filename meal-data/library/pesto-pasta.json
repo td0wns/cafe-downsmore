@@ -1,0 +1,20 @@
+{
+  "id": "pesto-pasta",
+  "name": "Pesto Pasta",
+  "category": "Weeknight",
+  "tags": ["Our meals", "Italian", "Quick"],
+  "minutes": 25,
+  "ingredients": [
+    { "ingredient": "pasta", "amount": "200g" },
+    { "ingredient": "garlic", "amount": "1 clove", "dominant": false },
+    { "ingredient": "vegetable-stock", "amount": "1 cube" },
+    { "ingredient": "courgette", "amount": "1" },
+    { "ingredient": "frozen-peas", "amount": "150g" },
+    { "ingredient": "creme-fraiche", "amount": "150g" },
+    { "ingredient": "vegetarian-pesto", "amount": "90g" }
+  ],
+  "notes": "Cook the pasta with the courgette and peas, then finish with crème fraîche and vegetarian pesto. Keep the garlic light.",
+  "preMade": false,
+  "separateVersions": false
+}
+

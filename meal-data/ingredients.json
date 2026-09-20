@@ -308,9 +308,125 @@
     "name": "vegetarian sausages",
     "vegetarian": true
   },
+  "vegetarian-pesto": {
+    "name": "vegetarian pesto",
+    "vegetarian": true
+  },
+  "creme-fraiche": {
+    "name": "crème fraîche",
+    "vegetarian": true
+  },
+  "cherry-tomatoes": {
+    "name": "cherry tomatoes",
+    "vegetarian": true,
+    "concern": "tomato"
+  },
+  "red-onion": {
+    "name": "red onion",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "frozen-chips": {
+    "name": "frozen chips",
+    "vegetarian": true
+  },
+  "pitta-breads": {
+    "name": "pitta breads",
+    "vegetarian": true
+  },
+  "greek-yoghurt": {
+    "name": "Greek yoghurt",
+    "vegetarian": true
+  },
+  "tomato": {
+    "name": "tomato",
+    "vegetarian": true,
+    "concern": "tomato"
+  },
+  "dried-oregano": {
+    "name": "dried oregano",
+    "vegetarian": true
+  },
+  "crispy-onions": {
+    "name": "crispy onions",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "mexican-cheese": {
+    "name": "Mexican cheese",
+    "vegetarian": true
+  },
+  "apple": {
+    "name": "apple",
+    "vegetarian": true
+  },
+  "tiger-bloomer-bread": {
+    "name": "tiger bloomer bread",
+    "vegetarian": true
+  },
+  "mayonnaise": {
+    "name": "mayonnaise",
+    "vegetarian": true,
+    "concern": "vinegar"
+  },
+  "swiss-cheese": {
+    "name": "Swiss cheese",
+    "vegetarian": true
+  },
+  "bacon": {
+    "name": "bacon",
+    "vegetarian": false
+  },
+  "vegetarian-bacon": {
+    "name": "vegetarian bacon",
+    "vegetarian": true
+  },
+  "sausages": {
+    "name": "sausages",
+    "vegetarian": false
+  },
+  "hot-dog-buns": {
+    "name": "hot dog buns",
+    "vegetarian": true
+  },
+  "jalapenos": {
+    "name": "jalapeños",
+    "vegetarian": true
+  },
+  "white-onion": {
+    "name": "white onion",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "corn-on-the-cob": {
+    "name": "corn on the cob",
+    "vegetarian": true
+  },
+  "spring-onions": {
+    "name": "spring onions",
+    "vegetarian": true,
+    "concern": "onion"
+  },
+  "sweet-potato": {
+    "name": "sweet potato",
+    "vegetarian": true
+  },
+  "nori-sheets": {
+    "name": "nori sheets",
+    "vegetarian": true
+  },
+  "jasmine-rice": {
+    "name": "jasmine rice",
+    "vegetarian": true
+  },
+  "wai-wai-noodles": {
+    "name": "Wai Wai noodles",
+    "vegetarian": true
+  },
   "yoghurt": {
     "name": "yoghurt",
     "vegetarian": true
   }
 }
+
 

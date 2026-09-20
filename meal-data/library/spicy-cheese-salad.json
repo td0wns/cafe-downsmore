@@ -1,0 +1,21 @@
+{
+  "id": "spicy-cheese-salad",
+  "name": "Spicy Cheese Salad",
+  "category": "Light",
+  "tags": ["Our meals", "Mexican-inspired", "Fresh"],
+  "minutes": 20,
+  "ingredients": [
+    { "ingredient": "lettuce", "amount": "1 small" },
+    { "ingredient": "crispy-onions", "amount": "50g", "dominant": false },
+    { "ingredient": "sesame-oil", "amount": "1 tbsp" },
+    { "ingredient": "mexican-cheese", "amount": "200g" },
+    { "ingredient": "carrots", "amount": "2" },
+    { "ingredient": "avocado", "amount": "1" },
+    { "ingredient": "red-onion", "amount": "1/2", "dominant": false },
+    { "ingredient": "apple", "amount": "1" }
+  ],
+  "notes": "Build the salad around the household's Mexican cheese, with crisp vegetables and apple. Keep both onion ingredients light.",
+  "preMade": false,
+  "separateVersions": false
+}
+

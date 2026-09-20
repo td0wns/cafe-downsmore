@@ -1,0 +1,21 @@
+{
+  "id": "diy-sushi",
+  "name": "DIY Sushi",
+  "category": "Weekend",
+  "tags": ["Our meals", "Japanese-inspired", "Fresh"],
+  "minutes": 45,
+  "ingredients": [
+    { "ingredient": "sweet-potato", "amount": "1 large" },
+    { "ingredient": "nori-sheets", "amount": "6" },
+    { "ingredient": "cucumber", "amount": "1" },
+    { "ingredient": "jasmine-rice", "amount": "250g" },
+    { "ingredient": "avocado", "amount": "2" },
+    { "ingredient": "carrots", "amount": "2" },
+    { "ingredient": "sesame-oil", "amount": "1 tbsp" },
+    { "ingredient": "soy-sauce", "amount": "3 tbsp" }
+  ],
+  "notes": "Set out cooked sweet potato, vegetables and seasoned jasmine rice for rolling at the table with nori, sesame oil and soy sauce.",
+  "preMade": false,
+  "separateVersions": false
+}
+

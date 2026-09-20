@@ -1,0 +1,19 @@
+{
+  "id": "suggested-squash-gnocchi",
+  "name": "Baked Veg Gnocchi",
+  "category": "One tray",
+  "tags": ["Our meals", "Italian", "One tray"],
+  "minutes": 35,
+  "ingredients": [
+    { "ingredient": "feta", "amount": "150g" },
+    { "ingredient": "potato-gnocchi", "amount": "500g" },
+    { "ingredient": "red-peppers", "amount": "2" },
+    { "ingredient": "courgette", "amount": "1" },
+    { "ingredient": "cherry-tomatoes", "amount": "200g", "dominant": false },
+    { "ingredient": "red-onion", "amount": "1/2", "dominant": false }
+  ],
+  "notes": "Bake the gnocchi with the vegetables until crisp at the edges, then crumble over the feta. Keep the tomatoes and red onion as background ingredients.",
+  "preMade": false,
+  "separateVersions": false
+}
+

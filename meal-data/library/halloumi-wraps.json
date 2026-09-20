@@ -1,16 +1,20 @@
 {
   "id": "halloumi-wraps",
-  "name": "Halloumi & roasted pepper wraps",
-  "category": "Quick",
-  "tags": ["Suggestions", "Middle Eastern", "Fresh"],
-  "minutes": 25,
+  "name": "Greek Pitta & Fries",
+  "category": "Weeknight",
+  "tags": ["Our meals", "Mediterranean", "Comfort"],
+  "minutes": 35,
   "ingredients": [
     { "ingredient": "halloumi", "amount": "225g" },
-    { "ingredient": "red-peppers", "amount": "2" },
-    { "ingredient": "flatbreads", "amount": "4" },
-    { "ingredient": "lettuce", "amount": "1 small" },
-    { "ingredient": "yoghurt", "amount": "4 tbsp" },
-    { "ingredient": "lemon", "amount": "1" }
+    { "ingredient": "frozen-chips", "amount": "500g" },
+    { "ingredient": "pitta-breads", "amount": "4" },
+    { "ingredient": "greek-yoghurt", "amount": "150g" },
+    { "ingredient": "red-onion", "amount": "1/2", "dominant": false },
+    { "ingredient": "cucumber", "amount": "1" },
+    { "ingredient": "tomato", "amount": "1", "dominant": false },
+    { "ingredient": "courgette", "amount": "1" },
+    { "ingredient": "dried-oregano", "amount": "1 tsp" }
   ],
-  "notes": "Good with oven chips or a simple green salad."
+  "notes": "Serve fried or grilled halloumi and oregano-roasted courgette in warm pittas with Greek yoghurt, salad and chips. Keep the red onion and tomato in the background."
 }
+

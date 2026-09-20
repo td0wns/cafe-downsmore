@@ -1,0 +1,23 @@
+{
+  "id": "hot-dogs",
+  "name": "Hot Dogs",
+  "category": "Easy",
+  "tags": ["Our meals", "American", "Comfort"],
+  "minutes": 35,
+  "ingredients": [
+    { "ingredient": "sausages", "amount": "4", "scope": "meat" },
+    { "ingredient": "vegetarian-sausages", "amount": "4", "scope": "vegetarian" },
+    { "ingredient": "hot-dog-buns", "amount": "4" },
+    { "ingredient": "jalapenos", "amount": "1 small jar" },
+    { "ingredient": "white-onion", "amount": "1/2", "dominant": false },
+    { "ingredient": "butter", "amount": "25g" },
+    { "ingredient": "brown-sugar", "amount": "1 tbsp" },
+    { "ingredient": "cheddar", "amount": "80g" },
+    { "ingredient": "corn-on-the-cob", "amount": "2" },
+    { "ingredient": "spring-onions", "amount": "2", "dominant": false }
+  ],
+  "notes": "Cook meat and vegetarian sausages separately. Serve in buns with lightly caramelised white onion, cheese, jalapeños and spring onions, with corn on the cob.",
+  "preMade": false,
+  "separateVersions": true
+}
+

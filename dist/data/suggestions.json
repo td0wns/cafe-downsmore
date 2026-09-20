@@ -50,54 +50,6 @@
     "timesCooked": 0
   },
   {
-    "id": "suggested-squash-gnocchi",
-    "name": "Butternut squash & sage gnocchi",
-    "category": "Weekend",
-    "tags": [
-      "Suggestions",
-      "Italian",
-      "Autumn"
-    ],
-    "minutes": 45,
-    "ingredients": [
-      {
-        "ingredientId": "potato-gnocchi",
-        "name": "potato gnocchi",
-        "amount": "500g"
-      },
-      {
-        "ingredientId": "butternut-squash",
-        "name": "butternut squash",
-        "amount": "1 small"
-      },
-      {
-        "ingredientId": "spinach",
-        "name": "spinach",
-        "amount": "150g"
-      },
-      {
-        "ingredientId": "butter",
-        "name": "butter",
-        "amount": "60g"
-      },
-      {
-        "ingredientId": "sage",
-        "name": "sage",
-        "amount": "small bunch"
-      },
-      {
-        "ingredientId": "vegetarian-hard-cheese",
-        "name": "vegetarian hard cheese",
-        "amount": "60g"
-      }
-    ],
-    "notes": "Brown butter, wilted spinach and crisp sage.",
-    "preMade": false,
-    "separateVersions": false,
-    "lastCooked": null,
-    "timesCooked": 0
-  },
-  {
     "id": "suggested-spinach-quesadillas",
     "name": "Cheese & spinach quesadillas",
     "category": "Quick",
@@ -320,3 +272,4 @@
     "timesCooked": 0
   }
 ]
+
